@@ -1083,7 +1083,16 @@ if (!window.customElements.get("ha-mi-humidifier-card")) {
           <div class="card-content">
             ${this.config.show_image ? x`
               <div class="image-container">
-                <img src="${humidifierImage}" alt="Mi Humidifier" />
+                <img 
+                  src="${humidifierImage}" 
+                  alt="Mi Humidifier"
+                  class="device-image"
+                  @error=${(e2) => {
+        console.error("Failed to load humidifier image");
+        const img = e2.target;
+        img.style.display = "none";
+      }}
+                />
               </div>
             ` : ""}
             <div class="header">
@@ -1091,8 +1100,6 @@ if (!window.customElements.get("ha-mi-humidifier-card")) {
               <div class="state-text" ?inactive=${!isOn}>${isOn ? "ON" : "OFF"}</div>
             </div>
             
-            ${this._renderImage()}
-
             <div class="status">
               <div class="humidity-display">
                 <span class="humidity-value">${targetHumidity}</span>
