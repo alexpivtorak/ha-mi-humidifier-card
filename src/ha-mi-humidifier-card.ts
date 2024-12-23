@@ -16,26 +16,32 @@ window.customCards = window.customCards || [];
 window.customCards.push({
   type: "ha-mi-humidifier-card",
   name: "Mi Humidifier Card",
-  description: "A custom card for Mi Humidifier",
+  description: "A custom card for Mi Humidifier"
 });
+
+interface HumidifierCardConfig {
+  type: string;
+  entity: string;
+}
 
 @customElement('ha-mi-humidifier-card')
 export class MiHumidifierCard extends LitElement {
   @property({ attribute: false }) public hass!: HomeAssistant;
-  @property() public config!: any;
+  @property() public config!: HumidifierCardConfig;
   @property() private isLoading = false;
   @property() private isTargetLoading = false;
   @property() private pendingTargetHumidity: number | null = null;
-  private debounceTimeout: any = null;
-  private targetDebounceTimeout: any = null;
+  private debounceTimeout: NodeJS.Timeout | null = null;
+  private targetDebounceTimeout: NodeJS.Timeout | null = null;
 
-  static getStubConfig() {
+  static getStubConfig(): HumidifierCardConfig {
     return {
+      type: 'custom:ha-mi-humidifier-card',
       entity: 'humidifier.deerma_jsq5_8f1b_humidifier',
     };
   }
 
-  setConfig(config) {
+  setConfig(config: HumidifierCardConfig) {
     if (!config.entity) {
       throw new Error('Please define an entity');
     }

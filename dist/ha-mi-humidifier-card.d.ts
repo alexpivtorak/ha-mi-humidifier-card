@@ -9,18 +9,20 @@ declare global {
         }>;
     }
 }
+interface HumidifierCardConfig {
+    type: string;
+    entity: string;
+}
 export declare class MiHumidifierCard extends LitElement {
     hass: HomeAssistant;
-    config: any;
+    config: HumidifierCardConfig;
     private isLoading;
     private isTargetLoading;
     private pendingTargetHumidity;
     private debounceTimeout;
     private targetDebounceTimeout;
-    static getStubConfig(): {
-        entity: string;
-    };
-    setConfig(config: any): void;
+    static getStubConfig(): HumidifierCardConfig;
+    setConfig(config: HumidifierCardConfig): void;
     private handlePowerClick;
     private handleTargetChange;
     static get styles(): import("lit").CSSResult;
@@ -28,3 +30,4 @@ export declare class MiHumidifierCard extends LitElement {
     private _renderImage;
     protected render(): import("lit-html").TemplateResult<1>;
 }
+export {};
