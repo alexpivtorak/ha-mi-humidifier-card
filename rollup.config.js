@@ -19,14 +19,9 @@ export default {
       targets: [
         { 
           src: 'src/images/humidifier-1.png',
-          dest: 'dist/images/'
-        },
-        {
-          src: 'src/images/humidifier-1.png',
           dest: 'dist/'
         }
-      ],
-      verbose: true
+      ]
     }),
     nodeResolve(),
     commonjs(),

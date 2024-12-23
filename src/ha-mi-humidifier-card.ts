@@ -407,34 +407,22 @@ export class MiHumidifierCard extends LitElement {
   private _renderImage() {
     return html`
       <img 
-        src="/local/community/ha-mi-humidifier-card/images/humidifier-1.png"
+        src="humidifier-1.png"
         alt="Mi Humidifier"
         class="device-image"
         @error=${(e) => {
           const img = e.target;
-          const currentPath = img.src;
+          console.log('❌ Failed to load image. Please check:');
+          console.log('   /config/www/community/ha-mi-humidifier-card/humidifier-1.png');
           
-          // Try fallback paths
-          if (currentPath.includes('/local/community/')) {
-            console.log('❌ Failed to load from community path, trying hacsfiles...');
-            img.src = '/hacsfiles/ha-mi-humidifier-card/images/humidifier-1.png';
-          } else if (currentPath.includes('/hacsfiles/')) {
-            console.log('❌ Failed to load from hacsfiles path, trying direct path...');
-            img.src = 'images/humidifier-1.png';
-          } else {
-            console.log('❌ All image paths failed. Please check these locations:');
-            console.log('1. /config/www/community/ha-mi-humidifier-card/images/humidifier-1.png');
-            console.log('2. /config/www/community/ha-mi-humidifier-card/humidifier-1.png');
-            
-            // Show error state
-            img.style.display = 'none';
-            const container = img.parentElement;
-            if (container) {
-              const error = document.createElement('div');
-              error.className = 'image-error';
-              error.textContent = '⚠️ Image not found';
-              container.appendChild(error);
-            }
+          // Show error state
+          img.style.display = 'none';
+          const container = img.parentElement;
+          if (container) {
+            const error = document.createElement('div');
+            error.className = 'image-error';
+            error.textContent = '⚠️ Image not found';
+            container.appendChild(error);
           }
         }}
       />
