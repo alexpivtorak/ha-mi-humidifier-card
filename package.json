@@ -20,7 +20,14 @@
     "lovelace",
     "custom-card",
     "mi-humidifier",
-    "xiaomi"
+    "xiaomi",
+    "smart-home",
+    "humidity",
+    "humidity-control",
+    "deerma",
+    "ha-card",
+    "typescript",
+    "lit-element"
   ],
   "author": "Your Name",
   "license": "MIT",
