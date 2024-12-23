@@ -1,5 +1,6 @@
 import { defineConfig } from 'vite';
 import { resolve } from 'path';
+import { viteStaticCopy } from 'vite-plugin-static-copy';
 
 export default defineConfig({
   build: {
@@ -9,22 +10,25 @@ export default defineConfig({
       fileName: 'ha-mi-humidifier-card',
       formats: ['es']
     },
-    rollupOptions: {
-      output: {
-        inlineDynamicImports: true,
-        assetFileNames: 'assets/[name].[ext]',
-        globals: {
-          'lit': 'Lit',
-          'lit/decorators.js': 'LitDecorators',
-          'custom-card-helpers': 'CustomCardHelpers'
-        }
-      }
-    },
     outDir: 'dist',
     emptyOutDir: true,
     sourcemap: true,
     target: 'es2015',
     assetsInlineLimit: 0, // Don't inline any assets
     minify: false // Disable minification for debugging
-  }
+  },
+  plugins: [
+    viteStaticCopy({
+      targets: [
+        {
+          src: 'src/assets/humidifier-1.png',
+          dest: 'assets'
+        },
+        {
+          src: 'src/assets/humidifier-1.png',
+          dest: '.'
+        }
+      ]
+    })
+  ]
 }); 
