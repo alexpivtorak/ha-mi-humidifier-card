@@ -412,8 +412,8 @@ export class MiHumidifierCard extends LitElement {
         class="device-image"
         @error=${(e) => {
           const img = e.target;
-          console.log('❌ Failed to load image. If you are a developer, please ensure the image exists at:');
-          console.log('   dist/images/humidifier-1.png');
+          console.log('❌ Failed to load image. Please ensure the image exists at:');
+          console.log('   /config/www/community/ha-mi-humidifier-card/images/humidifier-1.png');
           
           // Show a placeholder or error state
           img.style.display = 'none';

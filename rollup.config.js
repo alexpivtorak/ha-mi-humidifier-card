@@ -18,11 +18,10 @@ export default {
     copy({
       targets: [
         { 
-          src: 'images/humidifier-1.png',
+          src: 'src/images/*',
           dest: 'dist/images/'
         }
-      ],
-      verbose: true
+      ]
     }),
     nodeResolve(),
     commonjs(),
