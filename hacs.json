@@ -1,0 +1,7 @@
+{
+  "name": "Mi Humidifier Card",
+  "render_readme": true,
+  "content_in_root": true,
+  "filename": "dist/ha-mi-humidifier-card.js",
+  "category": "theme"
+} 

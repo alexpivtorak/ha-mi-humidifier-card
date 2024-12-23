@@ -4,6 +4,7 @@ A sleek and responsive Home Assistant Lovelace card for controlling Xiaomi Mi Hu
 
 [![Version](https://img.shields.io/badge/version-1.0.0-blue.svg)](https://github.com/alexpivtorak/ha-mi-humidifier-card/releases/tag/v1.0.0)
 [![HACS](https://img.shields.io/badge/HACS-Custom-orange.svg)](https://github.com/custom-components/hacs)
+[![HACS Validation](https://github.com/alexpivtorak/ha-mi-humidifier-card/workflows/HACS%20Validation/badge.svg)](https://github.com/alexpivtorak/ha-mi-humidifier-card/actions)
 [![License](https://img.shields.io/badge/license-MIT-green.svg)](LICENSE)
 
 ## Screenshots
