@@ -12,12 +12,20 @@ export default {
     dir: 'dist',
     format: 'es',
     sourcemap: true,
+    entryFileNames: '[name].js',
   },
   plugins: [
     copy({
       targets: [
-        { src: 'www/*', dest: 'dist' }
-      ]
+        { 
+          src: 'src/images/*',
+          dest: 'dist/images',
+          // Log copied files
+          hook: 'writeBundle',
+          verbose: true
+        }
+      ],
+      flatten: false
     }),
     nodeResolve(),
     commonjs(),

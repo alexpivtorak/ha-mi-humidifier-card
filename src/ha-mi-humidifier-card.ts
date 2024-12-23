@@ -426,9 +426,31 @@ export class MiHumidifierCard extends LitElement {
           </div>
           
           <img 
-            src="/local/ha-mi-humidifier-card/humidifier-1.png"
+            src="/hacsfiles/ha-mi-humidifier-card/images/humidifier-1.png"
             alt="Mi Humidifier"
             class="device-image"
+            @load=${(e) => {
+              console.log('✅ Image loaded successfully from:', e.target.src);
+            }}
+            @error=${(e) => {
+              // Log the failed attempt
+              console.log('❌ Failed to load image from:', e.target.src);
+              
+              // Fallback to local path if HACS path fails
+              const img = e.target;
+              if (img.src.includes('hacsfiles')) {
+                console.log('🔄 Trying fallback path...');
+                img.src = '/local/ha-mi-humidifier-card/images/humidifier-1.png';
+              } else {
+                console.log('❗ Image paths tried:', {
+                  hacs: '/hacsfiles/ha-mi-humidifier-card/images/humidifier-1.png',
+                  local: '/local/ha-mi-humidifier-card/images/humidifier-1.png',
+                  expectedLocalPath: 'www/community/ha-mi-humidifier-card/images/humidifier-1.png'
+                });
+                console.log('💡 Please check if the image exists in your Home Assistant config directory at:');
+                console.log('   config/www/community/ha-mi-humidifier-card/images/humidifier-1.png');
+              }
+            }}
           />
 
           <div class="status">
