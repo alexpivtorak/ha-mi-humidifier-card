@@ -2,13 +2,13 @@
 
 A sleek and responsive Home Assistant Lovelace card for controlling Xiaomi Mi Humidifier (Deerma) devices. This custom card provides an intuitive interface for managing your smart humidifier with features like target humidity control, water level monitoring, and real-time status updates. Built with TypeScript and Lit Element, it offers a modern, dark theme-compatible design that seamlessly integrates with your Home Assistant dashboard.
 
-[![Version](https://img.shields.io/badge/version-1.0.0-blue.svg)](https://github.com/yourusername/ha-mi-humidifier-card/releases/tag/v1.0.0)
+[![Version](https://img.shields.io/badge/version-1.0.0-blue.svg)](https://github.com/alexpivtorak/ha-mi-humidifier-card/releases/tag/v1.0.0)
 [![HACS](https://img.shields.io/badge/HACS-Custom-orange.svg)](https://github.com/custom-components/hacs)
 [![License](https://img.shields.io/badge/license-MIT-green.svg)](LICENSE)
 
 ## Demo
 
-Try out the card before installing! Check out our [interactive demo](https://yourusername.github.io/ha-mi-humidifier-card) to see how it works.
+Try out the card before installing! Check out our [interactive demo](https://alexpivtorak.github.io/ha-mi-humidifier-card) to see how it works.
 
 ## Screenshots
 

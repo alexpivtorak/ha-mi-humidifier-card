@@ -29,16 +29,16 @@
     "typescript",
     "lit-element"
   ],
-  "author": "Your Name",
+  "author": "Alex Pivtorak",
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/yourusername/ha-mi-humidifier-card.git"
+    "url": "git+https://github.com/alexpivtorak/ha-mi-humidifier-card.git"
   },
   "bugs": {
-    "url": "https://github.com/yourusername/ha-mi-humidifier-card/issues"
+    "url": "https://github.com/alexpivtorak/ha-mi-humidifier-card/issues"
   },
-  "homepage": "https://github.com/yourusername/ha-mi-humidifier-card",
+  "homepage": "https://github.com/alexpivtorak/ha-mi-humidifier-card",
   "dependencies": {
     "@material/mwc-icon-button": "^0.27.0",
     "custom-card-helpers": "^1.9.0",
