@@ -23,7 +23,7 @@ export declare class MiHumidifierCard extends LitElement {
     setConfig(config: any): void;
     private handlePowerClick;
     private handleTargetChange;
-    static get styles(): any;
+    static get styles(): import("lit").CSSResult;
     private handleSliderChange;
     private _renderImage;
     protected render(): import("lit-html").TemplateResult<1>;
