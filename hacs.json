@@ -1,9 +1,7 @@
 {
   "name": "Mi Humidifier Card",
   "render_readme": true,
-  "filename": "ha-mi-humidifier-card.js",
-  "content_in_root": true,
-  "homeassistant": "0.118.0",
-  "zip_release": true,
-  "files": ["dist/ha-mi-humidifier-card.js", "dist/humidifier-1.png"]
+  "filename": "dist/ha-mi-humidifier-card.js",
+  "content_in_root": false,
+  "homeassistant": "0.118.0"
 } 
