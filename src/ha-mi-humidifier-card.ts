@@ -411,47 +411,24 @@ export class MiHumidifierCard extends LitElement {
       cardPath: this.config?.path || 'unknown'
     });
 
-    // Store tried paths in a Set to prevent loops
-    const triedPaths = new Set();
-
     return html`
       <img 
-        src="/local/ha-mi-humidifier-card/humidifier-1.png"
+        src="/local/community/ha-mi-humidifier-card/humidifier-1.png"
         alt="Mi Humidifier"
         class="device-image"
         @error=${(e) => {
           const img = e.target;
-          const currentPath = img.src.split(window.location.origin)[1];
+          console.log('❌ Failed to load image. Please ensure the image exists at:');
+          console.log('   /config/www/community/ha-mi-humidifier-card/humidifier-1.png');
           
-          if (triedPaths.has(currentPath)) {
-            console.log('⚠️ Already tried this path, stopping to prevent loop:', currentPath);
-            return;
-          }
-          
-          triedPaths.add(currentPath);
-          console.log('❌ Failed to load image from:', currentPath);
-          
-          // Try next path
-          if (currentPath === '/local/ha-mi-humidifier-card/humidifier-1.png') {
-            console.log('🔄 Trying HACS path...');
-            img.src = '/hacsfiles/ha-mi-humidifier-card/humidifier-1.png';
-          } else if (currentPath === '/hacsfiles/ha-mi-humidifier-card/humidifier-1.png') {
-            console.log('🔄 Trying community path...');
-            img.src = '/local/community/ha-mi-humidifier-card/humidifier-1.png';
-          } else {
-            console.log('❗ All paths tried. Please check these locations:');
-            console.log('   1. config/www/ha-mi-humidifier-card/humidifier-1.png');
-            console.log('   2. config/www/community/ha-mi-humidifier-card/humidifier-1.png');
-            
-            // Show a placeholder or error state
-            img.style.display = 'none';
-            const container = img.parentElement;
-            if (container) {
-              const error = document.createElement('div');
-              error.className = 'image-error';
-              error.textContent = '⚠️ Image not found';
-              container.appendChild(error);
-            }
+          // Show a placeholder or error state
+          img.style.display = 'none';
+          const container = img.parentElement;
+          if (container) {
+            const error = document.createElement('div');
+            error.className = 'image-error';
+            error.textContent = '⚠️ Image not found';
+            container.appendChild(error);
           }
         }}
       />

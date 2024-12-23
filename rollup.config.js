@@ -19,11 +19,11 @@ export default {
       targets: [
         { 
           src: 'images/humidifier-1.png',
-          dest: 'dist'
+          dest: 'dist',
+          rename: 'humidifier-1.png'
         }
       ],
-      verbose: true,
-      hook: 'writeBundle'
+      verbose: true
     }),
     nodeResolve(),
     commonjs(),
