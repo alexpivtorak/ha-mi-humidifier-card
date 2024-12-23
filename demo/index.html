@@ -13,9 +13,21 @@
             max-width: 1200px;
             margin: 0 auto;
         }
-        .demo-card {
-            width: 400px;
+        .demo-cards {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 2rem;
+            justify-content: center;
             margin: 2rem auto;
+        }
+        .demo-card {
+            width: 350px;
+        }
+        .card-title {
+            text-align: center;
+            color: #0984ff;
+            margin-bottom: 1rem;
+            font-size: 1.2em;
         }
         h1 {
             text-align: center;
@@ -41,33 +53,95 @@
 </head>
 <body>
     <h1>Mi Humidifier Card Demo</h1>
-    <p class="description">Interactive demo of the Home Assistant custom card for Mi Humidifier</p>
+    <p class="description">Interactive demos of the Home Assistant custom card for Mi Humidifier</p>
     
-    <div class="demo-card">
-        <ha-mi-humidifier-card
-            .hass=${{
-                states: {
-                    'humidifier.demo_humidifier': {
-                        state: 'on',
-                        attributes: {
-                            friendly_name: 'Demo Humidifier',
-                            target_humidity: 50,
-                            current_humidity: 45,
+    <div class="demo-cards">
+        <!-- Normal State -->
+        <div class="demo-card">
+            <div class="card-title">Normal State</div>
+            <ha-mi-humidifier-card
+                .hass=${{
+                    states: {
+                        'humidifier.demo_humidifier': {
+                            state: 'on',
+                            attributes: {
+                                friendly_name: 'Living Room Humidifier',
+                                target_humidity: 50,
+                                current_humidity: 45,
+                            }
+                        },
+                        'binary_sensor.demo_humidifier_water_shortage_fault': {
+                            state: 'off'
                         }
                     },
-                    'binary_sensor.demo_humidifier_water_shortage_fault': {
-                        state: 'off'
+                    callService: (domain, service, data) => {
+                        console.log('Service called:', { domain, service, data });
+                        alert(`Service called: ${domain}.${service}\nData: ${JSON.stringify(data, null, 2)}`);
                     }
-                },
-                callService: (domain, service, data) => {
-                    console.log('Service called:', { domain, service, data });
-                    alert(`Service called: ${domain}.${service}\nData: ${JSON.stringify(data, null, 2)}`);
-                }
-            }}
-            .config=${{
-                entity: 'humidifier.demo_humidifier'
-            }}
-        ></ha-mi-humidifier-card>
+                }}
+                .config=${{
+                    entity: 'humidifier.demo_humidifier'
+                }}
+            ></ha-mi-humidifier-card>
+        </div>
+
+        <!-- Off State -->
+        <div class="demo-card">
+            <div class="card-title">Off State</div>
+            <ha-mi-humidifier-card
+                .hass=${{
+                    states: {
+                        'humidifier.demo_humidifier_off': {
+                            state: 'off',
+                            attributes: {
+                                friendly_name: 'Bedroom Humidifier',
+                                target_humidity: 45,
+                                current_humidity: 40,
+                            }
+                        },
+                        'binary_sensor.demo_humidifier_off_water_shortage_fault': {
+                            state: 'off'
+                        }
+                    },
+                    callService: (domain, service, data) => {
+                        console.log('Service called:', { domain, service, data });
+                        alert(`Service called: ${domain}.${service}\nData: ${JSON.stringify(data, null, 2)}`);
+                    }
+                }}
+                .config=${{
+                    entity: 'humidifier.demo_humidifier_off'
+                }}
+            ></ha-mi-humidifier-card>
+        </div>
+
+        <!-- Water Warning State -->
+        <div class="demo-card">
+            <div class="card-title">Water Warning State</div>
+            <ha-mi-humidifier-card
+                .hass=${{
+                    states: {
+                        'humidifier.demo_humidifier_warning': {
+                            state: 'on',
+                            attributes: {
+                                friendly_name: 'Office Humidifier',
+                                target_humidity: 60,
+                                current_humidity: 35,
+                            }
+                        },
+                        'binary_sensor.demo_humidifier_warning_water_shortage_fault': {
+                            state: 'on'
+                        }
+                    },
+                    callService: (domain, service, data) => {
+                        console.log('Service called:', { domain, service, data });
+                        alert(`Service called: ${domain}.${service}\nData: ${JSON.stringify(data, null, 2)}`);
+                    }
+                }}
+                .config=${{
+                    entity: 'humidifier.demo_humidifier_warning'
+                }}
+            ></ha-mi-humidifier-card>
+        </div>
     </div>
 
     <div class="github-link">
