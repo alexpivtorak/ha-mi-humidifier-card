@@ -7,8 +7,8 @@ npm run build
 mkdir -p dist/images
 cp src/images/humidifier-1.png dist/images/
 
-# Copy the built file to root
-cp dist/ha-mi-humidifier-card.js ./ha-mi-humidifier-card.js
+# Copy the built files to root
+cp dist/ha-mi-humidifier-card.iife.js ./ha-mi-humidifier-card.js
 
 # Add and commit the built file
 git add ha-mi-humidifier-card.js

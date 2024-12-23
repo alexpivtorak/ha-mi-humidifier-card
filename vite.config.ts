@@ -7,7 +7,7 @@ export default defineConfig({
       entry: resolve(__dirname, 'src/ha-mi-humidifier-card.ts'),
       name: 'HaMiHumidifierCard',
       fileName: 'ha-mi-humidifier-card',
-      formats: ['es']
+      formats: ['es', 'iife']
     },
     rollupOptions: {
       external: [
@@ -16,16 +16,20 @@ export default defineConfig({
         'custom-card-helpers'
       ],
       output: {
-        // Provide global variables to use in the UMD build
+        // Provide global variables to use in the IIFE build
         globals: {
           lit: 'Lit',
           'lit/decorators.js': 'LitDecorators',
           'custom-card-helpers': 'CustomCardHelpers'
-        }
+        },
+        inlineDynamicImports: true
       }
     },
     outDir: 'dist',
     emptyOutDir: true,
-    sourcemap: true
+    sourcemap: true,
+    // Ensure the custom element is registered
+    target: 'es2015',
+    minify: 'esbuild'
   }
 }); 
