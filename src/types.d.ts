@@ -18,6 +18,7 @@ interface HumidifierCardConfig {
   show_target?: boolean;
   show_current?: boolean;
   show_water_level?: boolean;
+  show_image?: boolean;
 }
 
 interface HumidifierAttributes {

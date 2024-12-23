@@ -1,6 +1,7 @@
 import { LitElement, html, css } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
 import { HomeAssistant } from 'custom-card-helpers';
+import { HumidifierCardConfig } from './types';
 
 declare global {
   interface Window {
@@ -8,6 +9,7 @@ declare global {
       type: string;
       name: string;
       description: string;
+      preview?: boolean;
     }>;
   }
 }
@@ -17,25 +19,27 @@ window.customCards.push({
   type: "ha-mi-humidifier-card",
   name: "Mi Humidifier Card",
   description: "A custom card for Mi Humidifier",
+  preview: false
 });
 
 @customElement('ha-mi-humidifier-card')
 export class MiHumidifierCard extends LitElement {
   @property({ attribute: false }) public hass!: HomeAssistant;
-  @property() public config!: any;
+  @property() public config!: HumidifierCardConfig;
   @property() private isLoading = false;
   @property() private isTargetLoading = false;
   @property() private pendingTargetHumidity: number | null = null;
-  private debounceTimeout: any = null;
-  private targetDebounceTimeout: any = null;
+  private debounceTimeout: NodeJS.Timeout | null = null;
+  private targetDebounceTimeout: NodeJS.Timeout | null = null;
 
-  static getStubConfig() {
+  static getStubConfig(): HumidifierCardConfig {
     return {
+      type: 'custom:ha-mi-humidifier-card',
       entity: 'humidifier.deerma_jsq5_8f1b_humidifier',
     };
   }
 
-  setConfig(config) {
+  setConfig(config: HumidifierCardConfig) {
     if (!config.entity) {
       throw new Error('Please define an entity');
     }
@@ -54,33 +58,38 @@ export class MiHumidifierCard extends LitElement {
       try {
         this.isLoading = true;
         const state = this.hass.states[this.config.entity];
+        if (!state) return;
+        
         const newState = state.state === 'on' ? 'off' : 'on';
         const service = newState === 'on' ? 'turn_on' : 'turn_off';
         
-        // Optimistically update the state
-        const oldState = { ...this.hass.states[this.config.entity] };
-        this.hass.states[this.config.entity] = {
-          ...oldState,
-          state: newState,
-        };
-        this.requestUpdate();
-
-        await this.hass.callService('humidifier', service, {
-          entity_id: this.config.entity,
+        // Create a timeout promise
+        const timeoutPromise = new Promise((_, reject) => {
+          setTimeout(() => reject(new Error('Service call timeout')), 10000);
         });
+
+        // Make service call with timeout
+        await Promise.race([
+          this.hass.callService('humidifier', service, {
+            entity_id: this.config.entity,
+          }),
+          timeoutPromise
+        ]);
+
       } catch (error) {
         console.error('Failed to toggle power:', error);
+        // Request update to revert any optimistic changes
+        this.requestUpdate();
       } finally {
         this.isLoading = false;
         this.debounceTimeout = null;
       }
-    }, 100); // 100ms debounce
+    }, 100);
   }
 
   private async handleTargetChange(change: number) {
     if (!this.config.entity || this.isTargetLoading) return;
     
-    // Clear any pending debounce
     if (this.targetDebounceTimeout) {
       clearTimeout(this.targetDebounceTimeout);
     }
@@ -89,36 +98,41 @@ export class MiHumidifierCard extends LitElement {
       try {
         this.isTargetLoading = true;
         const stateObj = this.hass.states[this.config.entity];
+        if (!stateObj?.attributes) return;
         
-        // Get current target from either pending or state
-        const currentTarget = this.pendingTargetHumidity !== null 
-          ? this.pendingTargetHumidity 
-          : (stateObj.attributes.target_humidity || 50);
-        
-        // Calculate new target with bounds check (40-80 range)
+        const currentTarget = this.pendingTargetHumidity ?? stateObj.attributes.target_humidity ?? 50;
         const newTarget = Math.min(80, Math.max(40, currentTarget + change));
         
-        // Only update if the value actually changed
         if (newTarget !== currentTarget) {
-          // Update pending target humidity for optimistic UI update
           this.pendingTargetHumidity = newTarget;
           this.requestUpdate();
 
-          await this.hass.callService('humidifier', 'set_humidity', {
-            entity_id: this.config.entity,
-            humidity: newTarget
+          // Create a timeout promise
+          const timeoutPromise = new Promise((_, reject) => {
+            setTimeout(() => reject(new Error('Service call timeout')), 10000);
           });
+
+          // Make service call with timeout
+          await Promise.race([
+            this.hass.callService('humidifier', 'set_humidity', {
+              entity_id: this.config.entity,
+              humidity: newTarget
+            }),
+            timeoutPromise
+          ]);
+
+          // Clear pending state after successful update
+          this.pendingTargetHumidity = null;
         }
       } catch (error) {
         console.error('Failed to change target humidity:', error);
-        // Reset pending target on error
         this.pendingTargetHumidity = null;
-        this.requestUpdate();
       } finally {
         this.isTargetLoading = false;
         this.targetDebounceTimeout = null;
+        this.requestUpdate();
       }
-    }, 100); // 100ms debounce
+    }, 100);
   }
 
   static get styles() {
@@ -406,43 +420,31 @@ export class MiHumidifierCard extends LitElement {
 
   private _renderImage() {
     return html`
-      <img 
-        src="./images/humidifier-1.png"
-        alt="Mi Humidifier"
-        class="device-image"
-        @error=${(e) => {
-          const img = e.target;
-          console.log('❌ Failed to load image. Please check:');
-          console.log('   /config/www/community/ha-mi-humidifier-card/images/humidifier-1.png');
-          console.log('Current src:', img.src);
-          
-          // Try fallback
-          if (img.src.includes('/images/')) {
-            console.log('🔄 Trying root path...');
-            img.src = './humidifier-1.png';
-          } else {
-            // Show error state
+      ${this.config.show_image === false ? '' : html`
+        <img 
+          src="/local/community/ha-mi-humidifier-card/humidifier-1.png"
+          alt="Mi Humidifier"
+          class="device-image"
+          @error=${(e: ErrorEvent) => {
+            const img = e.target as HTMLImageElement;
             img.style.display = 'none';
-            const container = img.parentElement;
-            if (container) {
-              const error = document.createElement('div');
-              error.className = 'image-error';
-              error.textContent = '⚠️ Image not found';
-              container.appendChild(error);
-            }
-          }
-        }}
-      />
+            this.requestUpdate();
+          }}
+        />
+        ${!this.shadowRoot?.querySelector('.device-image')?.hasAttribute('src') ? html`
+          <div class="image-error">⚠️ Image not found</div>
+        ` : ''}
+      `}
     `;
   }
 
   protected render() {
-    if (!this.config || !this.hass || !this.config.entity) {
+    if (!this.config?.entity || !this.hass) {
       return html``;
     }
 
     const stateObj = this.hass.states[this.config.entity];
-    if (!stateObj) {
+    if (!stateObj?.attributes) {
       return html`
         <ha-card>
           <div class="card-content">
@@ -452,17 +454,15 @@ export class MiHumidifierCard extends LitElement {
       `;
     }
 
-    const currentHumidity = stateObj.attributes.current_humidity || 0;
-    const targetHumidity = this.pendingTargetHumidity !== null 
-      ? this.pendingTargetHumidity 
-      : (stateObj.attributes.target_humidity || 50);
+    const currentHumidity = stateObj.attributes.current_humidity ?? 0;
+    const targetHumidity = this.pendingTargetHumidity ?? stateObj.attributes.target_humidity ?? 50;
     const isOn = stateObj.state === 'on';
 
     return html`
       <ha-card>
         <div class="card-content">
           <div class="header">
-            <div class="title">${stateObj.attributes.friendly_name || this.config.entity}</div>
+            <div class="title">${stateObj.attributes.friendly_name ?? this.config.entity}</div>
             <div class="state-text" ?inactive=${!isOn}>${isOn ? 'ON' : 'OFF'}</div>
           </div>
           
@@ -482,7 +482,7 @@ export class MiHumidifierCard extends LitElement {
               min="40"
               max="80"
               step="5"
-              .value=${targetHumidity}
+              .value=${String(targetHumidity)}
               class="slider"
               @change=${this.handleSliderChange}
               ?disabled=${!isOn}
