@@ -471,7 +471,7 @@ let MiHumidifierCard = class MiHumidifierCard extends s {
           </div>
           
           <img 
-            src="/local/community/ha-mi-humidifier-card/images/humidifier-1.png"
+            src="/hacsfiles/ha-mi-humidifier-card/images/humidifier-1.png"
             alt="Mi Humidifier"
             class="device-image"
           />
