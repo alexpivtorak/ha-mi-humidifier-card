@@ -432,29 +432,21 @@ if (!window.customElements.get('ha-mi-humidifier-card')) {
     private _renderImage() {
       return html`
         <img 
-          src="./humidifier-1.png"
+          src="/hacsfiles/ha-mi-humidifier-card/humidifier-1.png"
           alt="Mi Humidifier"
           class="device-image"
           @error=${(e) => {
             const img = e.target;
             console.log('❌ Failed to load image. Please check:');
-            console.log('   ./humidifier-1.png');
+            console.log('   /hacsfiles/ha-mi-humidifier-card/humidifier-1.png');
             console.log('Current src:', img.src);
-            
-            // Try fallback
-            if (!img.src.includes('/humidifier-1.png')) {
-              console.log('🔄 Trying relative path...');
-              img.src = './humidifier-1.png';
-            } else {
-              // Show error state
-              img.style.display = 'none';
-              const container = img.parentElement;
-              if (container) {
-                const error = document.createElement('div');
-                error.className = 'image-error';
-                error.textContent = '⚠️ Image not found';
-                container.appendChild(error);
-              }
+            img.style.display = 'none';
+            const container = img.parentElement;
+            if (container) {
+              const error = document.createElement('div');
+              error.className = 'image-error';
+              error.textContent = '⚠️ Image not found';
+              container.appendChild(error);
             }
           }}
         />
@@ -489,7 +481,7 @@ if (!window.customElements.get('ha-mi-humidifier-card')) {
             ${this.config.show_image ? html`
               <div class="image-container">
                 <img 
-                  src="./humidifier-1.png" 
+                  src="/hacsfiles/ha-mi-humidifier-card/humidifier-1.png" 
                   alt="Mi Humidifier"
                   class="device-image"
                   @error=${(e2) => {

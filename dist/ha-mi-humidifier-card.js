@@ -388,20 +388,16 @@ if (!window.customElements.get("ha-mi-humidifier-card")) {
     _renderImage() {
       return d`
         <img 
-          src="./humidifier-1.png"
+          src="/hacsfiles/ha-mi-humidifier-card/humidifier-1.png"
           alt="Mi Humidifier"
           class="device-image"
           @error=${(t) => {
         const i = t.target;
-        if (console.log("❌ Failed to load image. Please check:"), console.log("   ./humidifier-1.png"), console.log("Current src:", i.src), !i.src.includes("/humidifier-1.png"))
-          console.log("🔄 Trying relative path..."), i.src = "./humidifier-1.png";
-        else {
-          i.style.display = "none";
-          const a = i.parentElement;
-          if (a) {
-            const e = document.createElement("div");
-            e.className = "image-error", e.textContent = "⚠️ Image not found", a.appendChild(e);
-          }
+        console.log("❌ Failed to load image. Please check:"), console.log("   /hacsfiles/ha-mi-humidifier-card/humidifier-1.png"), console.log("Current src:", i.src), i.style.display = "none";
+        const a = i.parentElement;
+        if (a) {
+          const e = document.createElement("div");
+          e.className = "image-error", e.textContent = "⚠️ Image not found", a.appendChild(e);
         }
       }}
         />
@@ -427,7 +423,7 @@ if (!window.customElements.get("ha-mi-humidifier-card")) {
             ${this.config.show_image ? d`
               <div class="image-container">
                 <img 
-                  src="./humidifier-1.png" 
+                  src="/hacsfiles/ha-mi-humidifier-card/humidifier-1.png" 
                   alt="Mi Humidifier"
                   class="device-image"
                   @error=${(o) => {
