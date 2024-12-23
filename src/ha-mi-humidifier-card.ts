@@ -432,7 +432,7 @@ if (!window.customElements.get('ha-mi-humidifier-card')) {
     private _renderImage() {
       return html`
         <img 
-          src="./images/humidifier-1.png"
+          src="./humidifier-1.png"
           alt="Mi Humidifier"
           class="device-image"
           @error=${(e) => {
@@ -489,7 +489,7 @@ if (!window.customElements.get('ha-mi-humidifier-card')) {
             ${this.config.show_image ? html`
               <div class="image-container">
                 <img 
-                  src="${humidifierImage}" 
+                  src="./humidifier-1.png" 
                   alt="Mi Humidifier"
                   class="device-image"
                   @error=${(e2) => {
