@@ -407,7 +407,7 @@ export class MiHumidifierCard extends LitElement {
   private _renderImage() {
     return html`
       <img 
-        src="/local/community/ha-mi-humidifier-card/images/humidifier-1.png"
+        src="./images/humidifier-1.png"
         alt="Mi Humidifier"
         class="device-image"
         @error=${(e) => {
@@ -416,14 +416,20 @@ export class MiHumidifierCard extends LitElement {
           console.log('   /config/www/community/ha-mi-humidifier-card/images/humidifier-1.png');
           console.log('Current src:', img.src);
           
-          // Show error state
-          img.style.display = 'none';
-          const container = img.parentElement;
-          if (container) {
-            const error = document.createElement('div');
-            error.className = 'image-error';
-            error.textContent = '⚠️ Image not found';
-            container.appendChild(error);
+          // Try fallback
+          if (img.src.includes('/images/')) {
+            console.log('🔄 Trying root path...');
+            img.src = './humidifier-1.png';
+          } else {
+            // Show error state
+            img.style.display = 'none';
+            const container = img.parentElement;
+            if (container) {
+              const error = document.createElement('div');
+              error.className = 'image-error';
+              error.textContent = '⚠️ Image not found';
+              container.appendChild(error);
+            }
           }
         }}
       />

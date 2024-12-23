@@ -311,10 +311,10 @@ const nt=(t,e)=>"method"===e.kind&&e.descriptor&&!("value"in e.descriptor)?{...e
       }
     `}handleSliderChange(t){var e,i;const r=Number(t.target.value);this.config.entity&&!this.isTargetLoading&&this.handleTargetChange(r-(null!==(i=null!==(e=this.pendingTargetHumidity)&&void 0!==e?e:this.hass.states[this.config.entity].attributes.target_humidity)&&void 0!==i?i:50))}_renderImage(){return z`
       <img 
-        src="/local/community/ha-mi-humidifier-card/images/humidifier-1.png"
+        src="./images/humidifier-1.png"
         alt="Mi Humidifier"
         class="device-image"
-        @error=${t=>{const e=t.target;console.log("❌ Failed to load image. Please check:"),console.log("   /config/www/community/ha-mi-humidifier-card/images/humidifier-1.png"),console.log("Current src:",e.src),e.style.display="none";const i=e.parentElement;if(i){const t=document.createElement("div");t.className="image-error",t.textContent="⚠️ Image not found",i.appendChild(t)}}}
+        @error=${t=>{const e=t.target;if(console.log("❌ Failed to load image. Please check:"),console.log("   /config/www/community/ha-mi-humidifier-card/images/humidifier-1.png"),console.log("Current src:",e.src),e.src.includes("/images/"))console.log("🔄 Trying root path..."),e.src="./humidifier-1.png";else{e.style.display="none";const t=e.parentElement;if(t){const e=document.createElement("div");e.className="image-error",e.textContent="⚠️ Image not found",t.appendChild(e)}}}}
       />
     `}render(){var t,e,i;if(!this.config||!this.hass||!this.config.entity)return z``;const r=this.hass.states[this.config.entity];if(!r)return z`
         <ha-card>
