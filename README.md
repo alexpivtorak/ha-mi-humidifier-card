@@ -2,7 +2,13 @@
 
 A custom card for Home Assistant that provides a beautiful interface to control Xiaomi Mi Humidifier devices.
 
-![Mi Humidifier Card](src/images/humidifier-1.png)
+## Screenshots
+
+### Device View
+![Mi Humidifier Device](src/images/humidifier-1.png)
+
+### Card View
+![Mi Humidifier Card](src/images/card-screenshot.png)
 
 ## Features
 
