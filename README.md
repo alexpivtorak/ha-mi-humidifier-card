@@ -5,10 +5,14 @@ A custom card for Home Assistant that provides a beautiful interface to control 
 ## Screenshots
 
 ### Device View
-![Mi Humidifier Device](src/images/humidifier-1.png)
+<p align="center">
+  <img src="src/images/humidifier-1.png" alt="Mi Humidifier Device">
+</p>
 
 ### Card View
-![Mi Humidifier Card](src/images/card-screenshot.png)
+<p align="center">
+  <img src="src/images/card-screenshot.png" alt="Mi Humidifier Card">
+</p>
 
 ## Features
 
