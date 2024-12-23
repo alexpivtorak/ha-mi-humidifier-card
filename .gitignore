@@ -3,6 +3,11 @@ node_modules/
 
 # testing
 /coverage
+*.lcov
+
+# build
+dist/
+*.tsbuildinfo
 
 # misc
 .DS_Store
@@ -11,17 +16,23 @@ node_modules/
 .env.development.local
 .env.test.local
 .env.production.local
+*.log
+*.pem
 
+# debug logs
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
+debug.log
 
 # IDE
 .idea/
 .vscode/
 *.iml
+*.swp
+*.swo
 
 # Keep built files
-!ha-mi-humidifier-card.js
-!images/
-!images/*.png
+!dist/ha-mi-humidifier-card.js
+!dist/images/
+!dist/images/*.png
