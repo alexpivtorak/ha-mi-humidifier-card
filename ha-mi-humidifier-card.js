@@ -1,9 +1,37 @@
-import { LitElement as g, css as p, html as d } from "lit";
-import { property as l, customElement as u } from "lit/decorators.js";
-var h = Object.defineProperty, f = Object.getOwnPropertyDescriptor, c = (e, i, r, t) => {
-  for (var a = t > 1 ? void 0 : t ? f(i, r) : i, n = e.length - 1, s; n >= 0; n--)
-    (s = e[n]) && (a = (t ? s(i, r, a) : s(a)) || a);
-  return t && a && h(i, r, a), a;
+var v = Object.defineProperty, x = Object.defineProperties;
+var w = Object.getOwnPropertyDescriptors;
+var m = Object.getOwnPropertySymbols;
+var T = Object.prototype.hasOwnProperty, k = Object.prototype.propertyIsEnumerable;
+var y = (e, t, i) => t in e ? v(e, t, { enumerable: !0, configurable: !0, writable: !0, value: i }) : e[t] = i, f = (e, t) => {
+  for (var i in t || (t = {}))
+    T.call(t, i) && y(e, i, t[i]);
+  if (m)
+    for (var i of m(t))
+      k.call(t, i) && y(e, i, t[i]);
+  return e;
+}, b = (e, t) => x(e, w(t));
+var l = (e, t, i) => new Promise((r, a) => {
+  var o = (s) => {
+    try {
+      u(i.next(s));
+    } catch (h) {
+      a(h);
+    }
+  }, n = (s) => {
+    try {
+      u(i.throw(s));
+    } catch (h) {
+      a(h);
+    }
+  }, u = (s) => s.done ? r(s.value) : Promise.resolve(s.value).then(o, n);
+  u((i = i.apply(e, t)).next());
+});
+import { LitElement as _, css as C, html as g } from "lit";
+import { property as p, customElement as $ } from "lit/decorators.js";
+var H = Object.defineProperty, L = Object.getOwnPropertyDescriptor, d = (e, t, i, r) => {
+  for (var a = r > 1 ? void 0 : r ? L(t, i) : t, o = e.length - 1, n; o >= 0; o--)
+    (n = e[o]) && (a = (r ? n(t, i, a) : n(a)) || a);
+  return r && a && H(t, i, a), a;
 };
 window.customCards = window.customCards || [];
 window.customCards.push({
@@ -11,7 +39,7 @@ window.customCards.push({
   name: "Mi Humidifier Card",
   description: "A custom card for Mi Humidifier"
 });
-let o = class extends g {
+let c = class extends _ {
   constructor() {
     super(...arguments), this.isLoading = !1, this.isTargetLoading = !1, this.pendingTargetHumidity = null, this.debounceTimeout = null, this.targetDebounceTimeout = null;
   }
@@ -26,42 +54,45 @@ let o = class extends g {
       throw new Error("Please define an entity");
     this.config = e;
   }
-  async handlePowerClick() {
-    !this.config.entity || this.isLoading || (this.debounceTimeout && clearTimeout(this.debounceTimeout), this.debounceTimeout = setTimeout(async () => {
-      try {
-        this.isLoading = !0;
-        const i = this.hass.states[this.config.entity].state === "on" ? "off" : "on", r = i === "on" ? "turn_on" : "turn_off", t = { ...this.hass.states[this.config.entity] };
-        this.hass.states[this.config.entity] = {
-          ...t,
-          state: i
-        }, this.requestUpdate(), await this.hass.callService("humidifier", r, {
-          entity_id: this.config.entity
-        });
-      } catch (e) {
-        console.error("Failed to toggle power:", e);
-      } finally {
-        this.isLoading = !1, this.debounceTimeout = null;
-      }
-    }, 100));
+  handlePowerClick() {
+    return l(this, null, function* () {
+      !this.config.entity || this.isLoading || (this.debounceTimeout && clearTimeout(this.debounceTimeout), this.debounceTimeout = setTimeout(() => l(this, null, function* () {
+        try {
+          this.isLoading = !0;
+          const t = this.hass.states[this.config.entity].state === "on" ? "off" : "on", i = t === "on" ? "turn_on" : "turn_off", r = f({}, this.hass.states[this.config.entity]);
+          this.hass.states[this.config.entity] = b(f({}, r), {
+            state: t
+          }), this.requestUpdate(), yield this.hass.callService("humidifier", i, {
+            entity_id: this.config.entity
+          });
+        } catch (e) {
+          console.error("Failed to toggle power:", e);
+        } finally {
+          this.isLoading = !1, this.debounceTimeout = null;
+        }
+      }), 100));
+    });
   }
-  async handleTargetChange(e) {
-    !this.config.entity || this.isTargetLoading || (this.targetDebounceTimeout && clearTimeout(this.targetDebounceTimeout), this.targetDebounceTimeout = setTimeout(async () => {
-      try {
-        this.isTargetLoading = !0;
-        const i = this.hass.states[this.config.entity], r = this.pendingTargetHumidity !== null ? this.pendingTargetHumidity : i.attributes.target_humidity || 50, t = Math.min(80, Math.max(40, r + e));
-        t !== r && (this.pendingTargetHumidity = t, this.requestUpdate(), await this.hass.callService("humidifier", "set_humidity", {
-          entity_id: this.config.entity,
-          humidity: t
-        }));
-      } catch (i) {
-        console.error("Failed to change target humidity:", i), this.pendingTargetHumidity = null, this.requestUpdate();
-      } finally {
-        this.isTargetLoading = !1, this.targetDebounceTimeout = null;
-      }
-    }, 100));
+  handleTargetChange(e) {
+    return l(this, null, function* () {
+      !this.config.entity || this.isTargetLoading || (this.targetDebounceTimeout && clearTimeout(this.targetDebounceTimeout), this.targetDebounceTimeout = setTimeout(() => l(this, null, function* () {
+        try {
+          this.isTargetLoading = !0;
+          const t = this.hass.states[this.config.entity], i = this.pendingTargetHumidity !== null ? this.pendingTargetHumidity : t.attributes.target_humidity || 50, r = Math.min(80, Math.max(40, i + e));
+          r !== i && (this.pendingTargetHumidity = r, this.requestUpdate(), yield this.hass.callService("humidifier", "set_humidity", {
+            entity_id: this.config.entity,
+            humidity: r
+          }));
+        } catch (t) {
+          console.error("Failed to change target humidity:", t), this.pendingTargetHumidity = null, this.requestUpdate();
+        } finally {
+          this.isTargetLoading = !1, this.targetDebounceTimeout = null;
+        }
+      }), 100));
+    });
   }
   static get styles() {
-    return p`
+    return C`
       ha-card {
         height: 100%;
         background: var(--ha-card-background, var(--card-background-color, #1c1c1c));
@@ -336,25 +367,26 @@ let o = class extends g {
     `;
   }
   handleSliderChange(e) {
-    const i = Number(e.target.value);
-    this.config.entity && !this.isTargetLoading && this.handleTargetChange(i - (this.pendingTargetHumidity ?? this.hass.states[this.config.entity].attributes.target_humidity ?? 50));
+    var i, r;
+    const t = Number(e.target.value);
+    this.config.entity && !this.isTargetLoading && this.handleTargetChange(t - ((r = (i = this.pendingTargetHumidity) != null ? i : this.hass.states[this.config.entity].attributes.target_humidity) != null ? r : 50));
   }
   _renderImage() {
-    return d`
+    return g`
       <img 
         src="./images/humidifier-1.png"
         alt="Mi Humidifier"
         class="device-image"
         @error=${(e) => {
-      const i = e.target;
-      if (console.log("❌ Failed to load image. Please check:"), console.log("   /config/www/community/ha-mi-humidifier-card/images/humidifier-1.png"), console.log("Current src:", i.src), i.src.includes("/images/"))
-        console.log("🔄 Trying root path..."), i.src = "./humidifier-1.png";
+      const t = e.target;
+      if (console.log("❌ Failed to load image. Please check:"), console.log("   /config/www/community/ha-mi-humidifier-card/images/humidifier-1.png"), console.log("Current src:", t.src), t.src.includes("/images/"))
+        console.log("🔄 Trying root path..."), t.src = "./humidifier-1.png";
       else {
-        i.style.display = "none";
-        const r = i.parentElement;
-        if (r) {
-          const t = document.createElement("div");
-          t.className = "image-error", t.textContent = "⚠️ Image not found", r.appendChild(t);
+        t.style.display = "none";
+        const i = t.parentElement;
+        if (i) {
+          const r = document.createElement("div");
+          r.className = "image-error", r.textContent = "⚠️ Image not found", i.appendChild(r);
         }
       }
     }}
@@ -362,35 +394,35 @@ let o = class extends g {
     `;
   }
   render() {
-    var a, n, s;
+    var a, o, n;
     if (!this.config || !this.hass || !this.config.entity)
-      return d``;
+      return g``;
     const e = this.hass.states[this.config.entity];
     if (!e)
-      return d`
+      return g`
         <ha-card>
           <div class="card-content">
             <div class="not-found">Entity not found: ${this.config.entity}</div>
           </div>
         </ha-card>
       `;
-    const i = e.attributes.current_humidity || 0, r = this.pendingTargetHumidity !== null ? this.pendingTargetHumidity : e.attributes.target_humidity || 50, t = e.state === "on";
-    return d`
+    const t = e.attributes.current_humidity || 0, i = this.pendingTargetHumidity !== null ? this.pendingTargetHumidity : e.attributes.target_humidity || 50, r = e.state === "on";
+    return g`
       <ha-card>
         <div class="card-content">
           <div class="header">
             <div class="title">${e.attributes.friendly_name || this.config.entity}</div>
-            <div class="state-text" ?inactive=${!t}>${t ? "ON" : "OFF"}</div>
+            <div class="state-text" ?inactive=${!r}>${r ? "ON" : "OFF"}</div>
           </div>
           
           ${this._renderImage()}
 
           <div class="status">
             <div class="humidity-display">
-              <span class="humidity-value">${r}</span>
+              <span class="humidity-value">${i}</span>
               <span class="humidity-unit">%</span>
             </div>
-            <div class="current-humidity">${i}%</div>
+            <div class="current-humidity">${t}%</div>
           </div>
 
           <div class="slider-container">
@@ -399,10 +431,10 @@ let o = class extends g {
               min="40"
               max="80"
               step="5"
-              .value=${r}
+              .value=${i}
               class="slider"
               @change=${this.handleSliderChange}
-              ?disabled=${!t}
+              ?disabled=${!r}
             >
           </div>
 
@@ -410,14 +442,14 @@ let o = class extends g {
             <button 
               class="control-button"
               @click=${() => this.handleTargetChange(-5)}
-              ?disabled=${!t}
+              ?disabled=${!r}
             >
               -
             </button>
             <button 
               class="control-button"
               @click=${() => this.handleTargetChange(5)}
-              ?disabled=${!t}
+              ?disabled=${!r}
             >
               +
             </button>
@@ -428,11 +460,11 @@ let o = class extends g {
               <path fill="currentColor" d="M12,3.77L11.25,4.61C11.25,4.61 9.97,6.06 8.68,7.94C7.39,9.82 6,12.07 6,14.23A6,6 0 0,0 12,20.23A6,6 0 0,0 18,14.23C18,12.07 16.61,9.82 15.32,7.94C14.03,6.06 12.75,4.61 12.75,4.61L12,3.77M12,6.9C12.44,7.42 12.84,7.85 13.68,9.07C14.89,10.83 16,13.07 16,14.23C16,16.45 14.22,18.23 12,18.23C9.78,18.23 8,16.45 8,14.23C8,13.07 9.11,10.83 10.32,9.07C11.16,7.85 11.56,7.42 12,6.9Z" />
             </svg>
             <span class="water-level-text">
-              ${((n = this.hass.states[`binary_sensor.${this.config.entity.split(".")[1]}_water_shortage_fault`]) == null ? void 0 : n.state) === "on" ? "Tank Empty" : "Tank OK"}
+              ${((o = this.hass.states[`binary_sensor.${this.config.entity.split(".")[1]}_water_shortage_fault`]) == null ? void 0 : o.state) === "on" ? "Tank Empty" : "Tank OK"}
             </span>
           </div>
 
-          ${((s = this.hass.states[`binary_sensor.${this.config.entity.split(".")[1]}_water_shortage_fault`]) == null ? void 0 : s.state) === "on" ? d`
+          ${((n = this.hass.states[`binary_sensor.${this.config.entity.split(".")[1]}_water_shortage_fault`]) == null ? void 0 : n.state) === "on" ? g`
             <div class="water-warning">
               <svg viewBox="0 0 24 24">
                 <path fill="currentColor" d="M13 14H11V9H13M13 18H11V16H13M1 21H23L12 2L1 21Z" />
@@ -444,36 +476,36 @@ let o = class extends g {
           <button 
             class="power-button"
             @click=${this.handlePowerClick}
-            ?inactive=${!t}
+            ?inactive=${!r}
             ?loading=${this.isLoading}
             ?disabled=${this.isLoading}
           >
-            ${t ? "Turn Off" : "Turn On"}
+            ${r ? "Turn Off" : "Turn On"}
           </button>
         </div>
       </ha-card>
     `;
   }
 };
-c([
-  l({ attribute: !1 })
-], o.prototype, "hass", 2);
-c([
-  l()
-], o.prototype, "config", 2);
-c([
-  l()
-], o.prototype, "isLoading", 2);
-c([
-  l()
-], o.prototype, "isTargetLoading", 2);
-c([
-  l()
-], o.prototype, "pendingTargetHumidity", 2);
-o = c([
-  u("ha-mi-humidifier-card")
-], o);
+d([
+  p({ attribute: !1 })
+], c.prototype, "hass", 2);
+d([
+  p()
+], c.prototype, "config", 2);
+d([
+  p()
+], c.prototype, "isLoading", 2);
+d([
+  p()
+], c.prototype, "isTargetLoading", 2);
+d([
+  p()
+], c.prototype, "pendingTargetHumidity", 2);
+c = d([
+  $("ha-mi-humidifier-card")
+], c);
 export {
-  o as MiHumidifierCard
+  c as MiHumidifierCard
 };
 //# sourceMappingURL=ha-mi-humidifier-card.js.map
