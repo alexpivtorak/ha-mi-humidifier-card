@@ -346,11 +346,12 @@ let MiHumidifierCard = class MiHumidifierCard extends s {
         to { left: 100%; }
       }
       .device-image {
-        width: 120px;
+        width: 100%;
+        max-width: 200px;
         height: auto;
-        margin: 16px auto;
+        margin: 0 auto 16px;
         display: block;
-        filter: brightness(0.95);
+        filter: brightness(0.9) contrast(1.1);
       }
       .controls-row {
         display: flex;
@@ -443,7 +444,7 @@ let MiHumidifierCard = class MiHumidifierCard extends s {
     }
     render() {
         var _a, _b, _c;
-        if (!this.config || !this.hass) {
+        if (!this.config || !this.hass || !this.config.entity) {
             return x ``;
         }
         const stateObj = this.hass.states[this.config.entity];
@@ -451,42 +452,36 @@ let MiHumidifierCard = class MiHumidifierCard extends s {
             return x `
         <ha-card>
           <div class="card-content">
-            Entity not found: ${this.config.entity}
+            <div class="not-found">Entity not found: ${this.config.entity}</div>
           </div>
         </ha-card>
       `;
         }
-        const isOn = stateObj.state === 'on';
-        const currentHumidity = stateObj.attributes.current_humidity;
+        const currentHumidity = stateObj.attributes.current_humidity || 0;
         const targetHumidity = this.pendingTargetHumidity !== null
             ? this.pendingTargetHumidity
             : (stateObj.attributes.target_humidity || 50);
+        const isOn = stateObj.state === 'on';
         return x `
       <ha-card>
         <div class="card-content">
           <div class="header">
-            <div class="title">
-              ${stateObj.attributes.friendly_name || 'Mi Humidifier'}
-            </div>
-            <div class="state-text" ?inactive=${!isOn}>
-              ${isOn ? 'On' : 'Off'}
-            </div>
+            <div class="title">${stateObj.attributes.friendly_name || this.config.entity}</div>
+            <div class="state-text" ?inactive=${!isOn}>${isOn ? 'ON' : 'OFF'}</div>
           </div>
-
-          <img 
-            src="http://localhost:5000/humidifier-1.png"
-            alt="Mi Humidifier" 
-            class="device-image"
-          >
           
+          <img 
+            src="/local/community/ha-mi-humidifier-card/images/humidifier-1.png"
+            alt="Mi Humidifier"
+            class="device-image"
+          />
+
           <div class="status">
             <div class="humidity-display">
               <span class="humidity-value">${targetHumidity}</span>
               <span class="humidity-unit">%</span>
             </div>
-            ${currentHumidity ? x `
-              <div class="current-humidity">Current: ${currentHumidity}%</div>
-            ` : ''}
+            <div class="current-humidity">${currentHumidity}%</div>
           </div>
 
           <div class="slider-container">

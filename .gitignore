@@ -16,15 +16,12 @@ npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 
-# build
-dist/
-
 # IDE
 .idea/
 .vscode/
 *.iml
 
-# Keep the built files
+# Keep built files
 !ha-mi-humidifier-card.js
 !images/
-!images/*
+!images/*.png
