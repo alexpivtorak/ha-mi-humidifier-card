@@ -3,7 +3,7 @@
 <head>
     <title>Mi Humidifier Card</title>
     <script type="module" src="https://unpkg.com/lit@2.7.0/polyfill-support.js"></script>
-    <script type="module" src="dist/ha-mi-humidifier-card.js"></script>
+    <script type="module" src="/ha-mi-humidifier-card/dist/ha-mi-humidifier-card.js"></script>
     <style>
         body {
             background: var(--ha-card-background, #1c1c1c);
@@ -12,6 +12,7 @@
             height: 100vh;
             box-sizing: border-box;
             color: #fff;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
         }
         .card-container {
             width: 350px;
@@ -21,6 +22,18 @@
             color: red;
             text-align: center;
             margin-top: 16px;
+            padding: 16px;
+            background: rgba(255, 0, 0, 0.1);
+            border-radius: 8px;
+            display: none;
+        }
+        #debug-info {
+            margin-top: 16px;
+            padding: 16px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 8px;
+            font-family: monospace;
+            white-space: pre-wrap;
             display: none;
         }
     </style>
@@ -44,6 +57,8 @@
                 },
                 callService: (domain, service, data) => {
                     console.log('Service called:', { domain, service, data });
+                    document.getElementById('debug-info').textContent += `\nService called: ${domain}.${service}\nData: ${JSON.stringify(data, null, 2)}`;
+                    document.getElementById('debug-info').style.display = 'block';
                 }
             }}
             .config=${{
@@ -52,21 +67,38 @@
         ></ha-mi-humidifier-card>
     </div>
     <div id="error-message"></div>
+    <div id="debug-info"></div>
 
     <script>
         window.customCards = [];
+        
+        function addDebugInfo(message) {
+            console.log(message);
+            const debugInfo = document.getElementById('debug-info');
+            debugInfo.textContent += '\n' + message;
+            debugInfo.style.display = 'block';
+        }
+
         window.onerror = function(msg, url, lineNo, columnNo, error) {
-            console.error('Error: ' + msg + '\nURL: ' + url + '\nLine: ' + lineNo + '\nColumn: ' + columnNo + '\nError object: ' + JSON.stringify(error));
+            const errorMessage = `Error: ${msg}\nURL: ${url}\nLine: ${lineNo}\nColumn: ${columnNo}`;
+            console.error(errorMessage);
             document.getElementById('error-message').style.display = 'block';
             document.getElementById('error-message').textContent = 'Error loading card: ' + msg;
+            addDebugInfo(errorMessage);
             return false;
         };
+
         window.addEventListener('load', function() {
-            console.log('Page loaded');
+            addDebugInfo('Page loaded');
+            addDebugInfo('Script path: ' + document.querySelector('script[type="module"]:not([src*="unpkg"])').src);
             if (!customElements.get('ha-mi-humidifier-card')) {
-                console.error('Card element not registered');
+                const error = 'Card element not registered';
+                console.error(error);
                 document.getElementById('error-message').style.display = 'block';
-                document.getElementById('error-message').textContent = 'Card element not loaded';
+                document.getElementById('error-message').textContent = error;
+                addDebugInfo(error);
+            } else {
+                addDebugInfo('Card element registered successfully');
             }
         });
     </script>

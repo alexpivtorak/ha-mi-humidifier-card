@@ -28,12 +28,22 @@ jobs:
       - name: Build
         run: npm run build
         
-      - name: Prepare demo directory
+      - name: Prepare deployment
         run: |
-          mkdir -p demo/dist
-          cp -r dist/* demo/dist/
-          touch demo/.nojekyll
-          ls -la demo/
+          # Create a temporary deployment directory
+          mkdir -p _site
+          # Copy demo files
+          cp demo/index.html _site/
+          # Create dist directory and copy built files
+          mkdir -p _site/dist
+          cp -r dist/* _site/dist/
+          # Create .nojekyll
+          touch _site/.nojekyll
+          # List contents for debugging
+          echo "Contents of _site:"
+          ls -la _site
+          echo "Contents of _site/dist:"
+          ls -la _site/dist
         
       - name: Setup Pages
         uses: actions/configure-pages@v3
@@ -41,7 +51,7 @@ jobs:
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v2
         with:
-          path: './demo'
+          path: '_site'
           
   deploy:
     environment:
