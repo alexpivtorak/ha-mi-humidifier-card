@@ -23,3 +23,8 @@ dist/
 .idea/
 .vscode/
 *.iml
+
+# Keep the built files
+!ha-mi-humidifier-card.js
+!images/
+!images/*
