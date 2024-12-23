@@ -2,71 +2,42 @@
   "name": "ha-mi-humidifier-card",
   "version": "1.0.0",
   "description": "A beautiful custom card for Mi Humidifier in Home Assistant",
-  "type": "module",
-  "main": "dist/ha-mi-humidifier-card.js",
-  "scripts": {
-    "start": "rollup -c --watch",
-    "build": "rollup -c",
-    "test": "node --experimental-vm-modules node_modules/jest/bin/jest.js --config jest.config.cjs",
-    "test:watch": "node --experimental-vm-modules node_modules/jest/bin/jest.js --config jest.config.cjs --watch",
-    "lint": "eslint src/*.ts",
-    "lint:fix": "eslint src/*.ts --fix"
-  },
   "keywords": [
     "home-assistant",
     "homeassistant",
     "hass",
     "automation",
     "lovelace",
-    "custom-card",
-    "mi-humidifier",
-    "xiaomi",
-    "smart-home",
-    "humidity",
-    "humidity-control",
-    "deerma",
-    "ha-card",
-    "typescript",
-    "lit-element"
+    "custom-cards",
+    "humidifier",
+    "xiaomi"
   ],
-  "author": "Alex Pivtorak",
+  "module": "dist/ha-mi-humidifier-card.js",
+  "repository": "git@github.com:alexpivtorak/ha-mi-humidifier-card.git",
+  "author": "Alex Pivtorak <alexpivtorak@gmail.com>",
   "license": "MIT",
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/alexpivtorak/ha-mi-humidifier-card.git"
-  },
-  "bugs": {
-    "url": "https://github.com/alexpivtorak/ha-mi-humidifier-card/issues"
-  },
-  "homepage": "https://github.com/alexpivtorak/ha-mi-humidifier-card",
   "dependencies": {
-    "@material/mwc-icon-button": "^0.27.0",
-    "custom-card-helpers": "^1.9.0",
-    "home-assistant-js-websocket": "^8.0.1",
-    "lit": "^2.7.0"
+    "lit": "^2.0.0"
   },
   "devDependencies": {
-    "@babel/core": "^7.21.4",
-    "@babel/preset-env": "^7.26.0",
-    "@babel/preset-typescript": "^7.26.0",
+    "@babel/core": "^7.23.7",
     "@rollup/plugin-babel": "^6.0.3",
-    "@rollup/plugin-commonjs": "^24.1.0",
-    "@rollup/plugin-json": "^6.0.0",
-    "@rollup/plugin-node-resolve": "^15.3.1",
-    "@rollup/plugin-typescript": "^11.1.0",
-    "@rollup/plugin-url": "^8.0.2",
-    "@testing-library/dom": "^10.4.0",
-    "@testing-library/jest-dom": "^6.6.3",
-    "@types/jest": "^29.5.14",
-    "@typescript-eslint/eslint-plugin": "^5.58.0",
-    "@typescript-eslint/parser": "^5.58.0",
-    "eslint": "^8.38.0",
+    "@rollup/plugin-commonjs": "^25.0.7",
+    "@rollup/plugin-json": "^6.0.1",
+    "@rollup/plugin-node-resolve": "^15.2.3",
+    "@rollup/plugin-terser": "^0.4.4",
+    "@rollup/plugin-typescript": "^11.1.5",
+    "@types/jest": "^29.5.11",
     "jest": "^29.7.0",
-    "jest-environment-jsdom": "^29.7.0",
-    "rollup": "^3.20.2",
-    "rollup-plugin-serve": "^2.0.2",
-    "rollup-plugin-terser": "^7.0.2",
-    "ts-jest": "^29.2.5",
-    "typescript": "^5.0.4"
+    "rollup": "^2.79.1",
+    "rollup-plugin-serve": "^1.1.1",
+    "ts-jest": "^29.1.1",
+    "typescript": "^5.3.3"
+  },
+  "scripts": {
+    "start": "rollup -c rollup.config.dev.js --watch",
+    "build": "rollup -c",
+    "test": "jest",
+    "test:watch": "jest --watch"
   }
 }
