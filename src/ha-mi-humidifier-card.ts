@@ -1,6 +1,7 @@
 import { LitElement, html, css } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
 import { HomeAssistant } from 'custom-card-helpers';
+import humidifierImage from './assets/humidifier-1.png';
 
 declare global {
   interface Window {
@@ -24,6 +25,7 @@ if (!window.customElements.get('ha-mi-humidifier-card')) {
   interface HumidifierCardConfig {
     type: string;
     entity: string;
+    show_image?: boolean;
   }
 
   @customElement('ha-mi-humidifier-card')
@@ -40,6 +42,7 @@ if (!window.customElements.get('ha-mi-humidifier-card')) {
       return {
         type: 'custom:ha-mi-humidifier-card',
         entity: 'humidifier.deerma_jsq5_8f1b_humidifier',
+        show_image: true
       };
     }
 
@@ -47,7 +50,10 @@ if (!window.customElements.get('ha-mi-humidifier-card')) {
       if (!config.entity) {
         throw new Error('Please define an entity');
       }
-      this.config = config;
+      this.config = {
+        show_image: true,
+        ...config
+      };
     }
 
     private async handlePowerClick() {
@@ -402,6 +408,17 @@ if (!window.customElements.get('ha-mi-humidifier-card')) {
           color: var(--warning-color, #ff9800);
           margin: 16px 0;
         }
+
+        .image-container {
+          width: 100%;
+          margin-bottom: 16px;
+          text-align: center;
+        }
+        .image-container img {
+          max-width: 200px;
+          height: auto;
+          border-radius: 8px;
+        }
       `;
     }
 
@@ -469,6 +486,11 @@ if (!window.customElements.get('ha-mi-humidifier-card')) {
       return html`
         <ha-card>
           <div class="card-content">
+            ${this.config.show_image ? html`
+              <div class="image-container">
+                <img src="${humidifierImage}" alt="Mi Humidifier" />
+              </div>
+            ` : ''}
             <div class="header">
               <div class="title">${stateObj.attributes.friendly_name || this.config.entity}</div>
               <div class="state-text" ?inactive=${!isOn}>${isOn ? 'ON' : 'OFF'}</div>

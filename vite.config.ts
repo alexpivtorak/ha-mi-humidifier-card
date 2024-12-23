@@ -12,7 +12,7 @@ export default defineConfig({
     rollupOptions: {
       output: {
         inlineDynamicImports: true,
-        // Provide global variables for external packages
+        assetFileNames: 'assets/[name].[ext]',
         globals: {
           'lit': 'Lit',
           'lit/decorators.js': 'LitDecorators',
@@ -24,6 +24,7 @@ export default defineConfig({
     emptyOutDir: true,
     sourcemap: true,
     target: 'es2015',
+    assetsInlineLimit: 0, // Don't inline any assets
     minify: false // Disable minification for debugging
   }
 }); 
