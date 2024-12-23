@@ -28,6 +28,11 @@ jobs:
       - name: Build
         run: npm run build
         
+      - name: Copy dist to demo
+        run: |
+          mkdir -p demo/dist
+          cp dist/* demo/dist/
+        
       - name: Setup Pages
         uses: actions/configure-pages@v3
         
@@ -45,4 +50,4 @@ jobs:
     steps:
       - name: Deploy to GitHub Pages
         id: deployment
-        uses: actions/deploy-pages@v2 
+        uses: actions/deploy-pages@v2
