@@ -16,9 +16,8 @@ npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 
-# exclude everything in dist except the main js file
-dist/*
-!dist/ha-mi-humidifier-card.js
+# build
+dist/
 
 # IDE
 .idea/

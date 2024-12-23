@@ -1,4 +1,6 @@
 {
   "name": "Mi Humidifier Card",
-  "filename": "dist/ha-mi-humidifier-card.js"
+  "content_in_root": true,
+  "filename": "ha-mi-humidifier-card.js",
+  "render_readme": true
 } 
