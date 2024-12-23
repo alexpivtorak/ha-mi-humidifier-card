@@ -1,13 +1,13 @@
 var b = Object.defineProperty, v = Object.defineProperties;
 var x = Object.getOwnPropertyDescriptors;
-var f = Object.getOwnPropertySymbols;
+var m = Object.getOwnPropertySymbols;
 var w = Object.prototype.hasOwnProperty, T = Object.prototype.propertyIsEnumerable;
-var m = (r, t, i) => t in r ? b(r, t, { enumerable: !0, configurable: !0, writable: !0, value: i }) : r[t] = i, h = (r, t) => {
+var f = (r, t, i) => t in r ? b(r, t, { enumerable: !0, configurable: !0, writable: !0, value: i }) : r[t] = i, h = (r, t) => {
   for (var i in t || (t = {}))
-    w.call(t, i) && m(r, i, t[i]);
-  if (f)
-    for (var i of f(t))
-      T.call(t, i) && m(r, i, t[i]);
+    w.call(t, i) && f(r, i, t[i]);
+  if (m)
+    for (var i of m(t))
+      T.call(t, i) && f(r, i, t[i]);
   return r;
 }, y = (r, t) => v(r, x(t));
 var u = (r, t, i) => new Promise((a, e) => {
@@ -388,12 +388,12 @@ if (!window.customElements.get("ha-mi-humidifier-card")) {
     _renderImage() {
       return d`
         <img 
-          src="humidifier-1.png"
+          src="/local/community/ha-mi-humidifier-card/humidifier-1.png"
           alt="Mi Humidifier"
           class="device-image"
           @error=${(t) => {
         const i = t.target;
-        console.log("❌ Failed to load image. Please check:"), console.log("   humidifier-1.png"), console.log("Current src:", i.src), i.style.display = "none";
+        console.log("❌ Failed to load image. Please check:"), console.log("   /local/community/ha-mi-humidifier-card/humidifier-1.png"), console.log("Current src:", i.src), i.style.display = "none";
         const a = i.parentElement;
         if (a) {
           const e = document.createElement("div");
@@ -423,7 +423,7 @@ if (!window.customElements.get("ha-mi-humidifier-card")) {
             ${this.config.show_image ? d`
               <div class="image-container">
                 <img 
-                  src="humidifier-1.png" 
+                  src="/local/community/ha-mi-humidifier-card/humidifier-1.png" 
                   alt="Mi Humidifier"
                   class="device-image"
                   @error=${(o) => {
