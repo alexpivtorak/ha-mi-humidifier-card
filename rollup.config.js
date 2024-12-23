@@ -4,20 +4,20 @@ import nodeResolve from '@rollup/plugin-node-resolve';
 import babel from '@rollup/plugin-babel';
 import terser from '@rollup/plugin-terser';
 import json from '@rollup/plugin-json';
-import url from '@rollup/plugin-url';
+import copy from 'rollup-plugin-copy';
 
 export default {
   input: 'src/ha-mi-humidifier-card.ts',
   output: {
-    dir: '.',
+    dir: 'dist',
     format: 'es',
-    entryFileNames: 'ha-mi-humidifier-card.js',
-    assetFileNames: 'images/[name][extname]'
+    sourcemap: true,
   },
   plugins: [
-    url({
-      include: ['**/*.png', '**/*.jpg', '**/*.gif'],
-      limit: 0,
+    copy({
+      targets: [
+        { src: 'www/*', dest: 'dist' }
+      ]
     }),
     nodeResolve(),
     commonjs(),

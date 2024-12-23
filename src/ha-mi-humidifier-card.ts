@@ -426,7 +426,7 @@ export class MiHumidifierCard extends LitElement {
           </div>
           
           <img 
-            src="images/humidifier-1.png"
+            src="/local/ha-mi-humidifier-card/humidifier-1.png"
             alt="Mi Humidifier"
             class="device-image"
           />
