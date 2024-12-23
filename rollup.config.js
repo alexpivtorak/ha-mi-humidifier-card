@@ -12,15 +12,14 @@ export default {
     dir: 'dist',
     format: 'es',
     sourcemap: true,
-    entryFileNames: '[name].js',
+    entryFileNames: 'ha-mi-humidifier-card.js',
   },
   plugins: [
     copy({
       targets: [
         { 
           src: 'images/humidifier-1.png',
-          dest: 'dist',
-          rename: 'humidifier-1.png'
+          dest: 'dist/images/'
         }
       ],
       verbose: true
