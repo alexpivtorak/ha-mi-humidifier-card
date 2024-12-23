@@ -18,14 +18,17 @@ export default {
     copy({
       targets: [
         { 
-          src: 'src/images/*',
-          dest: 'dist/images',
-          // Log copied files
-          hook: 'writeBundle',
-          verbose: true
+          src: 'src/images/humidifier-1.png',
+          dest: 'dist',
+          rename: 'humidifier-1.png'
+        },
+        {
+          src: 'src/images/humidifier-1.png',
+          dest: 'dist/images'
         }
       ],
-      flatten: false
+      verbose: true,
+      hook: 'writeBundle'
     }),
     nodeResolve(),
     commonjs(),

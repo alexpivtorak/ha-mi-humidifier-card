@@ -395,6 +395,50 @@ export class MiHumidifierCard extends LitElement {
     }
   }
 
+  private _renderImage() {
+    // Log current environment info
+    console.log('🔍 Environment:', {
+      baseUrl: window.location.origin,
+      cardPath: this.config?.path || 'unknown'
+    });
+
+    return html`
+      <img 
+        src="/local/community/ha-mi-humidifier-card/humidifier-1.png"
+        alt="Mi Humidifier"
+        class="device-image"
+        @load=${(e) => {
+          console.log('✅ Image loaded successfully from:', e.target.src);
+        }}
+        @error=${(e) => {
+          const img = e.target;
+          console.log('❌ Failed to load image from:', img.src);
+          
+          // Try different paths in sequence
+          const paths = [
+            '/local/community/ha-mi-humidifier-card/humidifier-1.png',
+            '/hacsfiles/ha-mi-humidifier-card/humidifier-1.png',
+            '/local/ha-mi-humidifier-card/humidifier-1.png',
+            'humidifier-1.png'
+          ];
+          
+          const currentIndex = paths.indexOf(img.src.split(window.location.origin)[1]);
+          if (currentIndex < paths.length - 1) {
+            const nextPath = paths[currentIndex + 1];
+            console.log('🔄 Trying next path:', nextPath);
+            img.src = nextPath;
+          } else {
+            console.log('❗ All paths tried:', paths);
+            console.log('💡 Please ensure the image exists in one of these locations in your Home Assistant config:');
+            console.log('   1. config/www/community/ha-mi-humidifier-card/humidifier-1.png');
+            console.log('   2. config/www/ha-mi-humidifier-card/humidifier-1.png');
+            console.log('   3. In the same directory as the card');
+          }
+        }}
+      />
+    `;
+  }
+
   protected render() {
     if (!this.config || !this.hass || !this.config.entity) {
       return html``;
@@ -425,33 +469,7 @@ export class MiHumidifierCard extends LitElement {
             <div class="state-text" ?inactive=${!isOn}>${isOn ? 'ON' : 'OFF'}</div>
           </div>
           
-          <img 
-            src="/hacsfiles/ha-mi-humidifier-card/images/humidifier-1.png"
-            alt="Mi Humidifier"
-            class="device-image"
-            @load=${(e) => {
-              console.log('✅ Image loaded successfully from:', e.target.src);
-            }}
-            @error=${(e) => {
-              // Log the failed attempt
-              console.log('❌ Failed to load image from:', e.target.src);
-              
-              // Fallback to local path if HACS path fails
-              const img = e.target;
-              if (img.src.includes('hacsfiles')) {
-                console.log('🔄 Trying fallback path...');
-                img.src = '/local/ha-mi-humidifier-card/images/humidifier-1.png';
-              } else {
-                console.log('❗ Image paths tried:', {
-                  hacs: '/hacsfiles/ha-mi-humidifier-card/images/humidifier-1.png',
-                  local: '/local/ha-mi-humidifier-card/images/humidifier-1.png',
-                  expectedLocalPath: 'www/community/ha-mi-humidifier-card/images/humidifier-1.png'
-                });
-                console.log('💡 Please check if the image exists in your Home Assistant config directory at:');
-                console.log('   config/www/community/ha-mi-humidifier-card/images/humidifier-1.png');
-              }
-            }}
-          />
+          ${this._renderImage()}
 
           <div class="status">
             <div class="humidity-display">
