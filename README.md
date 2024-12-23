@@ -89,9 +89,35 @@ npm run build
 
 Built files will be in the `dist` folder.
 
+### Testing
+
+The project uses Jest for unit testing. Tests are written in TypeScript and located in `src/*.test.ts` files.
+
+To run tests:
+```bash
+npm test
+```
+
+To run tests in watch mode:
+```bash
+npm run test:watch
+```
+
+Current test coverage includes:
+- Configuration validation
+- Target humidity control
+- State management
+- Error handling
+
 ## Contributing
 
 Contributions are welcome! Please feel free to submit a Pull Request.
+
+Before submitting:
+1. Make sure all tests pass
+2. Add tests for new features
+3. Follow the existing code style
+4. Update documentation as needed
 
 ## License
 
