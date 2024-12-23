@@ -385,6 +385,15 @@ export class MiHumidifierCard extends LitElement {
       .water-level[data-state="empty"] svg {
         color: var(--error-color, #f44336);
       }
+
+      .image-error {
+        text-align: center;
+        padding: 16px;
+        background: rgba(var(--rgb-warning-color, 255, 152, 0), 0.1);
+        border-radius: 8px;
+        color: var(--warning-color, #ff9800);
+        margin: 16px 0;
+      }
     `;
   }
 
@@ -402,37 +411,47 @@ export class MiHumidifierCard extends LitElement {
       cardPath: this.config?.path || 'unknown'
     });
 
+    // Store tried paths in a Set to prevent loops
+    const triedPaths = new Set();
+
     return html`
       <img 
-        src="/local/community/ha-mi-humidifier-card/humidifier-1.png"
+        src="/local/ha-mi-humidifier-card/humidifier-1.png"
         alt="Mi Humidifier"
         class="device-image"
-        @load=${(e) => {
-          console.log('✅ Image loaded successfully from:', e.target.src);
-        }}
         @error=${(e) => {
           const img = e.target;
-          console.log('❌ Failed to load image from:', img.src);
+          const currentPath = img.src.split(window.location.origin)[1];
           
-          // Try different paths in sequence
-          const paths = [
-            '/local/community/ha-mi-humidifier-card/humidifier-1.png',
-            '/hacsfiles/ha-mi-humidifier-card/humidifier-1.png',
-            '/local/ha-mi-humidifier-card/humidifier-1.png',
-            'humidifier-1.png'
-          ];
+          if (triedPaths.has(currentPath)) {
+            console.log('⚠️ Already tried this path, stopping to prevent loop:', currentPath);
+            return;
+          }
           
-          const currentIndex = paths.indexOf(img.src.split(window.location.origin)[1]);
-          if (currentIndex < paths.length - 1) {
-            const nextPath = paths[currentIndex + 1];
-            console.log('🔄 Trying next path:', nextPath);
-            img.src = nextPath;
+          triedPaths.add(currentPath);
+          console.log('❌ Failed to load image from:', currentPath);
+          
+          // Try next path
+          if (currentPath === '/local/ha-mi-humidifier-card/humidifier-1.png') {
+            console.log('🔄 Trying HACS path...');
+            img.src = '/hacsfiles/ha-mi-humidifier-card/humidifier-1.png';
+          } else if (currentPath === '/hacsfiles/ha-mi-humidifier-card/humidifier-1.png') {
+            console.log('🔄 Trying community path...');
+            img.src = '/local/community/ha-mi-humidifier-card/humidifier-1.png';
           } else {
-            console.log('❗ All paths tried:', paths);
-            console.log('💡 Please ensure the image exists in one of these locations in your Home Assistant config:');
-            console.log('   1. config/www/community/ha-mi-humidifier-card/humidifier-1.png');
-            console.log('   2. config/www/ha-mi-humidifier-card/humidifier-1.png');
-            console.log('   3. In the same directory as the card');
+            console.log('❗ All paths tried. Please check these locations:');
+            console.log('   1. config/www/ha-mi-humidifier-card/humidifier-1.png');
+            console.log('   2. config/www/community/ha-mi-humidifier-card/humidifier-1.png');
+            
+            // Show a placeholder or error state
+            img.style.display = 'none';
+            const container = img.parentElement;
+            if (container) {
+              const error = document.createElement('div');
+              error.className = 'image-error';
+              error.textContent = '⚠️ Image not found';
+              container.appendChild(error);
+            }
           }
         }}
       />
