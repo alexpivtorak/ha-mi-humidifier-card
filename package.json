@@ -1,7 +1,7 @@
 {
   "name": "ha-mi-humidifier-card",
   "version": "1.0.0",
-  "description": "Custom card for Mi Humidifier in Home Assistant",
+  "description": "A beautiful custom card for Mi Humidifier in Home Assistant",
   "type": "module",
   "main": "dist/ha-mi-humidifier-card.js",
   "scripts": {
@@ -15,11 +15,23 @@
   "keywords": [
     "home-assistant",
     "homeassistant",
+    "hass",
+    "automation",
+    "lovelace",
+    "custom-card",
     "mi-humidifier",
-    "custom-card"
+    "xiaomi"
   ],
-  "author": "",
+  "author": "Your Name",
   "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/yourusername/ha-mi-humidifier-card.git"
+  },
+  "bugs": {
+    "url": "https://github.com/yourusername/ha-mi-humidifier-card/issues"
+  },
+  "homepage": "https://github.com/yourusername/ha-mi-humidifier-card",
   "dependencies": {
     "@material/mwc-icon-button": "^0.27.0",
     "custom-card-helpers": "^1.9.0",

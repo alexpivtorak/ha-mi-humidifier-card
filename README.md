@@ -2,6 +2,10 @@
 
 A custom card for Home Assistant that provides a beautiful interface to control Xiaomi Mi Humidifier devices.
 
+[![Version](https://img.shields.io/badge/version-1.0.0-blue.svg)](https://github.com/yourusername/ha-mi-humidifier-card/releases/tag/v1.0.0)
+[![HACS](https://img.shields.io/badge/HACS-Custom-orange.svg)](https://github.com/custom-components/hacs)
+[![License](https://img.shields.io/badge/license-MIT-green.svg)](LICENSE)
+
 ## Screenshots
 
 ### Device View
@@ -22,6 +26,18 @@ A custom card for Home Assistant that provides a beautiful interface to control 
 - 🎨 Modern, responsive design
 - 🌙 Dark theme support
 - 🔄 Real-time status updates
+
+## Changelog
+
+### [1.0.0] - 2023-12-23
+- Initial release
+- Target humidity control with slider and buttons
+- Water level monitoring
+- Power control with loading states
+- Modern, responsive design
+- Dark theme support
+- Real-time status updates
+- Unit tests and documentation
 
 ## Installation
 
