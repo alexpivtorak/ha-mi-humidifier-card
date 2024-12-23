@@ -438,12 +438,12 @@ if (!window.customElements.get('ha-mi-humidifier-card')) {
           @error=${(e) => {
             const img = e.target;
             console.log('❌ Failed to load image. Please check:');
-            console.log('   /config/www/community/ha-mi-humidifier-card/images/humidifier-1.png');
+            console.log('   ./humidifier-1.png');
             console.log('Current src:', img.src);
             
             // Try fallback
-            if (img.src.includes('/images/')) {
-              console.log('🔄 Trying root path...');
+            if (!img.src.includes('/humidifier-1.png')) {
+              console.log('🔄 Trying relative path...');
               img.src = './humidifier-1.png';
             } else {
               // Show error state

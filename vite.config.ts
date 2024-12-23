@@ -14,21 +14,16 @@ export default defineConfig({
     emptyOutDir: true,
     sourcemap: true,
     target: 'es2015',
-    assetsInlineLimit: 0, // Don't inline any assets
-    minify: false // Disable minification for debugging
+    rollupOptions: {
+      external: /^lit|^home-assistant-js-websocket/
+    }
   },
   plugins: [
     viteStaticCopy({
-      targets: [
-        {
-          src: 'src/assets/humidifier-1.png',
-          dest: 'assets'
-        },
-        {
-          src: 'src/assets/humidifier-1.png',
-          dest: '.'
-        }
-      ]
+      targets: [{
+        src: 'src/assets/humidifier-1.png',
+        dest: '.'
+      }]
     })
   ]
 }); 
