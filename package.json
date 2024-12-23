@@ -17,7 +17,9 @@
   "author": "Alex Pivtorak <alexpivtorak@gmail.com>",
   "license": "MIT",
   "dependencies": {
-    "lit": "^2.0.0"
+    "lit": "^2.0.0",
+    "custom-card-helpers": "^1.9.0",
+    "home-assistant-js-websocket": "^8.0.1"
   },
   "devDependencies": {
     "@babel/core": "^7.23.7",
