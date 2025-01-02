@@ -23,7 +23,8 @@ export default defineConfig({
       targets: [
         {
           src: 'images/humidifier-1.png',
-          dest: '.'
+          dest: '.',
+          rename: 'humidifier-1.png'
         }
       ]
     })
