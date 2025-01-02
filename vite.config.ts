@@ -22,9 +22,8 @@ export default defineConfig({
     viteStaticCopy({
       targets: [
         {
-          src: resolve(__dirname, 'images/humidifier-1.png'),
-          dest: 'dist',
-          rename: 'humidifier-1.png'
+          src: './images/*',
+          dest: './dist'
         }
       ]
     })

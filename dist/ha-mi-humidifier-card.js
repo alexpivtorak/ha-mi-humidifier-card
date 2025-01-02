@@ -1,36 +1,36 @@
 var b = Object.defineProperty, v = Object.defineProperties;
 var x = Object.getOwnPropertyDescriptors;
-var m = Object.getOwnPropertySymbols;
+var f = Object.getOwnPropertySymbols;
 var w = Object.prototype.hasOwnProperty, T = Object.prototype.propertyIsEnumerable;
-var f = (r, t, i) => t in r ? b(r, t, { enumerable: !0, configurable: !0, writable: !0, value: i }) : r[t] = i, h = (r, t) => {
+var m = (r, t, i) => t in r ? b(r, t, { enumerable: !0, configurable: !0, writable: !0, value: i }) : r[t] = i, u = (r, t) => {
   for (var i in t || (t = {}))
-    w.call(t, i) && f(r, i, t[i]);
-  if (m)
-    for (var i of m(t))
-      T.call(t, i) && f(r, i, t[i]);
+    w.call(t, i) && m(r, i, t[i]);
+  if (f)
+    for (var i of f(t))
+      T.call(t, i) && m(r, i, t[i]);
   return r;
 }, y = (r, t) => v(r, x(t));
-var u = (r, t, i) => new Promise((a, e) => {
-  var n = (o) => {
+var l = (r, t, i) => new Promise((a, e) => {
+  var o = (s) => {
     try {
-      c(i.next(o));
-    } catch (g) {
-      e(g);
+      c(i.next(s));
+    } catch (h) {
+      e(h);
     }
-  }, s = (o) => {
+  }, n = (s) => {
     try {
-      c(i.throw(o));
-    } catch (g) {
-      e(g);
+      c(i.throw(s));
+    } catch (h) {
+      e(h);
     }
-  }, c = (o) => o.done ? a(o.value) : Promise.resolve(o.value).then(n, s);
+  }, c = (s) => s.done ? a(s.value) : Promise.resolve(s.value).then(o, n);
   c((i = i.apply(r, t)).next());
 });
-import { LitElement as _, css as k, html as d } from "lit";
+import { LitElement as _, css as k, html as g } from "lit";
 import { property as p, customElement as C } from "lit/decorators.js";
-var $ = Object.defineProperty, H = Object.getOwnPropertyDescriptor, l = (r, t, i, a) => {
-  for (var e = a > 1 ? void 0 : a ? H(t, i) : t, n = r.length - 1, s; n >= 0; n--)
-    (s = r[n]) && (e = (a ? s(t, i, e) : s(e)) || e);
+var $ = Object.defineProperty, H = Object.getOwnPropertyDescriptor, d = (r, t, i, a) => {
+  for (var e = a > 1 ? void 0 : a ? H(t, i) : t, o = r.length - 1, n; o >= 0; o--)
+    (n = r[o]) && (e = (a ? n(t, i, e) : n(e)) || e);
   return a && e && $(t, i, e), e;
 };
 if (!window.customElements.get("ha-mi-humidifier-card")) {
@@ -53,17 +53,17 @@ if (!window.customElements.get("ha-mi-humidifier-card")) {
     setConfig(t) {
       if (!t.entity)
         throw new Error("Please define an entity");
-      this.config = h({
+      this.config = u({
         show_image: !0
       }, t);
     }
     handlePowerClick() {
-      return u(this, null, function* () {
-        !this.config.entity || this.isLoading || (this.debounceTimeout && clearTimeout(this.debounceTimeout), this.debounceTimeout = setTimeout(() => u(this, null, function* () {
+      return l(this, null, function* () {
+        !this.config.entity || this.isLoading || (this.debounceTimeout && clearTimeout(this.debounceTimeout), this.debounceTimeout = setTimeout(() => l(this, null, function* () {
           try {
             this.isLoading = !0;
-            const i = this.hass.states[this.config.entity].state === "on" ? "off" : "on", a = i === "on" ? "turn_on" : "turn_off", e = h({}, this.hass.states[this.config.entity]);
-            this.hass.states[this.config.entity] = y(h({}, e), {
+            const i = this.hass.states[this.config.entity].state === "on" ? "off" : "on", a = i === "on" ? "turn_on" : "turn_off", e = u({}, this.hass.states[this.config.entity]);
+            this.hass.states[this.config.entity] = y(u({}, e), {
               state: i
             }), this.requestUpdate(), yield this.hass.callService("humidifier", a, {
               entity_id: this.config.entity
@@ -77,8 +77,8 @@ if (!window.customElements.get("ha-mi-humidifier-card")) {
       });
     }
     handleTargetChange(t) {
-      return u(this, null, function* () {
-        !this.config.entity || this.isTargetLoading || (this.targetDebounceTimeout && clearTimeout(this.targetDebounceTimeout), this.targetDebounceTimeout = setTimeout(() => u(this, null, function* () {
+      return l(this, null, function* () {
+        !this.config.entity || this.isTargetLoading || (this.targetDebounceTimeout && clearTimeout(this.targetDebounceTimeout), this.targetDebounceTimeout = setTimeout(() => l(this, null, function* () {
           try {
             this.isTargetLoading = !0;
             const i = this.hass.states[this.config.entity], a = this.pendingTargetHumidity !== null ? this.pendingTargetHumidity : i.attributes.target_humidity || 50, e = Math.min(80, Math.max(40, a + t));
@@ -386,14 +386,14 @@ if (!window.customElements.get("ha-mi-humidifier-card")) {
       this.config.entity && !this.isTargetLoading && this.handleTargetChange(i - ((e = (a = this.pendingTargetHumidity) != null ? a : this.hass.states[this.config.entity].attributes.target_humidity) != null ? e : 50));
     }
     _renderImage() {
-      return d`
+      return g`
         <img 
-          src="/local/community/ha-mi-humidifier-card/humidifier-1.png"
+          src="humidifier-1.png"
           alt="Mi Humidifier"
           class="device-image"
           @error=${(t) => {
         const i = t.target;
-        console.log("❌ Failed to load image. Please check:"), console.log("   /local/community/ha-mi-humidifier-card/humidifier-1.png"), console.log("Current src:", i.src), i.style.display = "none";
+        console.log("❌ Failed to load image. Please check:"), console.log("   humidifier-1.png"), console.log("Current src:", i.src), i.style.display = "none";
         const a = i.parentElement;
         if (a) {
           const e = document.createElement("div");
@@ -404,12 +404,12 @@ if (!window.customElements.get("ha-mi-humidifier-card")) {
       `;
     }
     render() {
-      var n, s, c;
+      var o, n, c;
       if (!this.config || !this.hass || !this.config.entity)
-        return d``;
+        return g``;
       const t = this.hass.states[this.config.entity];
       if (!t)
-        return d`
+        return g`
           <ha-card>
             <div class="card-content">
               <div class="not-found">Entity not found: ${this.config.entity}</div>
@@ -417,23 +417,10 @@ if (!window.customElements.get("ha-mi-humidifier-card")) {
           </ha-card>
         `;
       const i = t.attributes.current_humidity || 0, a = this.pendingTargetHumidity !== null ? this.pendingTargetHumidity : t.attributes.target_humidity || 50, e = t.state === "on";
-      return d`
+      return g`
         <ha-card>
           <div class="card-content">
-            ${this.config.show_image ? d`
-              <div class="image-container">
-                <img 
-                  src="/local/community/ha-mi-humidifier-card/humidifier-1.png" 
-                  alt="Mi Humidifier"
-                  class="device-image"
-                  @error=${(o) => {
-        console.error("Failed to load humidifier image");
-        const g = o.target;
-        g.style.display = "none";
-      }}
-                />
-              </div>
-            ` : ""}
+            ${this.config.show_image ? this._renderImage() : ""}
             <div class="header">
               <div class="title">${t.attributes.friendly_name || this.config.entity}</div>
               <div class="state-text" ?inactive=${!e}>${e ? "ON" : "OFF"}</div>
@@ -477,16 +464,16 @@ if (!window.customElements.get("ha-mi-humidifier-card")) {
               </button>
             </div>
 
-            <div class="water-level" data-state=${((n = this.hass.states[`binary_sensor.${this.config.entity.split(".")[1]}_water_shortage_fault`]) == null ? void 0 : n.state) === "on" ? "empty" : "ok"}>
+            <div class="water-level" data-state=${((o = this.hass.states[`binary_sensor.${this.config.entity.split(".")[1]}_water_shortage_fault`]) == null ? void 0 : o.state) === "on" ? "empty" : "ok"}>
               <svg viewBox="0 0 24 24">
                 <path fill="currentColor" d="M12,3.77L11.25,4.61C11.25,4.61 9.97,6.06 8.68,7.94C7.39,9.82 6,12.07 6,14.23A6,6 0 0,0 12,20.23A6,6 0 0,0 18,14.23C18,12.07 16.61,9.82 15.32,7.94C14.03,6.06 12.75,4.61 12.75,4.61L12,3.77M12,6.9C12.44,7.42 12.84,7.85 13.68,9.07C14.89,10.83 16,13.07 16,14.23C16,16.45 14.22,18.23 12,18.23C9.78,18.23 8,16.45 8,14.23C8,13.07 9.11,10.83 10.32,9.07C11.16,7.85 11.56,7.42 12,6.9Z" />
               </svg>
               <span class="water-level-text">
-                ${((s = this.hass.states[`binary_sensor.${this.config.entity.split(".")[1]}_water_shortage_fault`]) == null ? void 0 : s.state) === "on" ? "Tank Empty" : "Tank OK"}
+                ${((n = this.hass.states[`binary_sensor.${this.config.entity.split(".")[1]}_water_shortage_fault`]) == null ? void 0 : n.state) === "on" ? "Tank Empty" : "Tank OK"}
               </span>
             </div>
 
-            ${((c = this.hass.states[`binary_sensor.${this.config.entity.split(".")[1]}_water_shortage_fault`]) == null ? void 0 : c.state) === "on" ? d`
+            ${((c = this.hass.states[`binary_sensor.${this.config.entity.split(".")[1]}_water_shortage_fault`]) == null ? void 0 : c.state) === "on" ? g`
               <div class="water-warning">
                 <svg viewBox="0 0 24 24">
                   <path fill="currentColor" d="M13 14H11V9H13M13 18H11V16H13M1 21H23L12 2L1 21Z" />
@@ -509,17 +496,17 @@ if (!window.customElements.get("ha-mi-humidifier-card")) {
       `;
     }
   };
-  l([
+  d([
     p({ attribute: !1 })
-  ], r.prototype, "hass", 2), l([
+  ], r.prototype, "hass", 2), d([
     p()
-  ], r.prototype, "config", 2), l([
+  ], r.prototype, "config", 2), d([
     p()
-  ], r.prototype, "isLoading", 2), l([
+  ], r.prototype, "isLoading", 2), d([
     p()
-  ], r.prototype, "isTargetLoading", 2), l([
+  ], r.prototype, "isTargetLoading", 2), d([
     p()
-  ], r.prototype, "pendingTargetHumidity", 2), r = l([
+  ], r.prototype, "pendingTargetHumidity", 2), r = d([
     C("ha-mi-humidifier-card")
   ], r);
 }
