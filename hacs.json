@@ -2,7 +2,7 @@
   "name": "Mi Humidifier Card",
   "render_readme": true,
   "filename": "ha-mi-humidifier-card.js",
-  "content_in_root": true,
+  "content_in_root": false,
   "homeassistant": "0.118.0",
   "hacs": "1.6.0",
   "domains": ["lovelace"],
