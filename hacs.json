@@ -1,13 +1,12 @@
 {
   "name": "Mi Humidifier Card",
   "render_readme": true,
-  "filename": "dist/ha-mi-humidifier-card.js",
-  "content_in_root": false,
+  "filename": "ha-mi-humidifier-card.js",
+  "content_in_root": true,
   "homeassistant": "0.118.0",
   "hacs": "1.6.0",
   "domains": ["lovelace"],
   "files": [
-    "dist/ha-mi-humidifier-card.js",
-    "dist/humidifier-1.png"
+    "dist/*"
   ]
 } 

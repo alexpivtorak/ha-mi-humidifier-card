@@ -1,7 +1,6 @@
 import { LitElement, html, css } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
 import { HomeAssistant } from 'custom-card-helpers';
-import humidifierImage from './assets/humidifier-1.png';
 
 declare global {
   interface Window {
@@ -432,13 +431,13 @@ if (!window.customElements.get('ha-mi-humidifier-card')) {
     private _renderImage() {
       return html`
         <img 
-          src="/local/community/ha-mi-humidifier-card/humidifier-1.png"
+          src="humidifier-1.png"
           alt="Mi Humidifier"
           class="device-image"
           @error=${(e) => {
             const img = e.target;
             console.log('❌ Failed to load image. Please check:');
-            console.log('   /local/community/ha-mi-humidifier-card/humidifier-1.png');
+            console.log('   humidifier-1.png');
             console.log('Current src:', img.src);
             img.style.display = 'none';
             const container = img.parentElement;
@@ -478,20 +477,7 @@ if (!window.customElements.get('ha-mi-humidifier-card')) {
       return html`
         <ha-card>
           <div class="card-content">
-            ${this.config.show_image ? html`
-              <div class="image-container">
-                <img 
-                  src="/local/community/ha-mi-humidifier-card/humidifier-1.png" 
-                  alt="Mi Humidifier"
-                  class="device-image"
-                  @error=${(e2) => {
-                    console.error('Failed to load humidifier image');
-                    const img = e2.target;
-                    img.style.display = 'none';
-                  }}
-                />
-              </div>
-            ` : ''}
+            ${this.config.show_image ? this._renderImage() : ''}
             <div class="header">
               <div class="title">${stateObj.attributes.friendly_name || this.config.entity}</div>
               <div class="state-text" ?inactive=${!isOn}>${isOn ? 'ON' : 'OFF'}</div>
