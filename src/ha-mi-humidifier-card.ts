@@ -429,9 +429,12 @@ if (!window.customElements.get('ha-mi-humidifier-card')) {
     }
 
     private _renderImage() {
+      const imagePath = new URL('../images/humidifier-1.png', import.meta.url).href;
+      console.log('imagePath', imagePath);
+      
       return html`
         <img 
-          src="humidifier-1.png"
+          src="${imagePath}"
           alt="Mi Humidifier"
           class="device-image"
           @error=${(e) => {
