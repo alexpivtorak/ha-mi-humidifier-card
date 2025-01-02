@@ -429,8 +429,7 @@ if (!window.customElements.get('ha-mi-humidifier-card')) {
     }
 
     private _renderImage() {
-      const imagePath = new URL('../images/humidifier-1.png', import.meta.url).href;
-      console.log('imagePath', imagePath);
+      const imagePath = new URL('./humidifier-1.png', import.meta.url).href;
       
       return html`
         <img 
