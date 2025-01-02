@@ -22,8 +22,8 @@ export default defineConfig({
     viteStaticCopy({
       targets: [
         {
-          src: './images/*',
-          dest: './dist'
+          src: 'images/humidifier-1.png',
+          dest: '.'
         }
       ]
     })
