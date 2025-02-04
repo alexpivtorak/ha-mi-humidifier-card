@@ -13,10 +13,24 @@ declare global {
 }
 
 interface HumidifierCardConfig {
-  type: string;
+  type: 'custom:mi-humidifier-card';
   entity: string;
   show_image?: boolean;
 }
+
+// Register card in HACS
+window.customCards = window.customCards || [];
+window.customCards.push({
+  type: "mi-humidifier-card",
+  name: "Mi Humidifier Card",
+  description: "A custom card for Mi Humidifier"
+});
+
+console.info(
+  '%c MI-HUMIDIFIER-CARD %c Version 1.0.0 ',
+  'color: white; background: #4527a0; font-weight: 700;',
+  'color: #4527a0; background: white; font-weight: 700;',
+);
 
 @customElement('mi-humidifier-card')
 export class MiHumidifierCard extends LitElement {
@@ -527,13 +541,3 @@ export class MiHumidifierCard extends LitElement {
     `;
   }
 }
-
-// Register the card
-customElements.define('mi-humidifier-card', MiHumidifierCard);
-
-window.customCards = window.customCards || [];
-window.customCards.push({
-  type: "mi-humidifier-card",
-  name: "Mi Humidifier Card",
-  description: "A custom card for Mi Humidifier"
-});
