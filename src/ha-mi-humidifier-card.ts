@@ -19,9 +19,18 @@ interface HumidifierCardConfig {
 }
 
 // Register card in HACS
-window.customCards = window.customCards || [];
+if (!window.customCards) {
+  window.customCards = [];
+}
+
+console.info(
+  '%c MI-HUMIDIFIER-CARD %c Registering card... ',
+  'color: white; background: #4527a0; font-weight: 700;',
+  'color: #4527a0; background: white; font-weight: 700;',
+);
+
 window.customCards.push({
-  type: "mi-humidifier-card",
+  type: "custom:mi-humidifier-card",
   name: "Mi Humidifier Card",
   description: "A custom card for Mi Humidifier"
 });
