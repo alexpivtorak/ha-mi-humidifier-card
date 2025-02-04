@@ -270,7 +270,7 @@ let d = class extends k {
         height: 200px;
         margin: 0 auto 16px;
         display: block;
-        background: url("/local/community/ha-mi-humidifier-card/humidifier-1.png") no-repeat center;
+        background: url("/hacsfiles/ha-mi-humidifier-card/humidifier-1.png") no-repeat center;
         background-size: contain;
       }
       .controls-row {
