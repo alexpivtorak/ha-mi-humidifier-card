@@ -6,7 +6,7 @@ export default defineConfig({
   build: {
     lib: {
       entry: resolve(__dirname, 'src/ha-mi-humidifier-card.ts'),
-      name: 'MiHumidifierCard',
+      name: 'HaMiHumidifierCard',
       fileName: 'ha-mi-humidifier-card',
       formats: ['es']
     },
@@ -15,7 +15,11 @@ export default defineConfig({
     sourcemap: true,
     target: 'es2015',
     rollupOptions: {
-      external: /^lit|^home-assistant-js-websocket/
+      external: [/^lit/, /^custom-card-helpers/],
+      output: {
+        format: 'es',
+        entryFileNames: '[name].js'
+      }
     }
   },
   plugins: [

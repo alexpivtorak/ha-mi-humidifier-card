@@ -1,35 +1,30 @@
 import { LitElement, html, css } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
-import { HomeAssistant } from 'custom-card-helpers';
+import { HomeAssistant, fireEvent, LovelaceCard } from 'custom-card-helpers';
 
-// Register card in HACS
-if (!customElements.get('mi-humidifier-card')) {
-  console.info(
-    '%c MI-HUMIDIFIER-CARD %c Registering card... ',
-    'color: white; background: #4527a0; font-weight: 700;',
-    'color: #4527a0; background: white; font-weight: 700;',
-  );
-
-  if (!window.customCards) {
-    window.customCards = [];
-  }
-
-  window.customCards.push({
-    type: "custom:mi-humidifier-card",
-    name: "Mi Humidifier Card",
-    description: "A custom card for Mi Humidifier"
-  });
-}
-
+// This is for typing
 declare global {
+  interface HTMLElementTagNameMap {
+    'ha-mi-humidifier-card': MiHumidifierCard;
+  }
   interface Window {
-    customCards: Array<{
+    customCards?: Array<{
       type: string;
       name: string;
       description: string;
+      preview: boolean;
     }>;
   }
 }
+
+/* Card registration */
+(window as any).customCards = (window as any).customCards || [];
+(window as any).customCards.push({
+  type: "ha-mi-humidifier-card",
+  name: "Mi Humidifier Card",
+  description: "A custom card for Mi Humidifier",
+  preview: true,
+});
 
 console.info(
   '%c MI-HUMIDIFIER-CARD %c Version 1.0.0 ',
@@ -37,31 +32,30 @@ console.info(
   'color: #4527a0; background: white; font-weight: 700;',
 );
 
-interface HumidifierCardConfig {
-  type: 'custom:mi-humidifier-card';
-  entity: string;
-  show_image?: boolean;
-}
-
-@customElement('mi-humidifier-card')
-export class MiHumidifierCard extends LitElement {
+@customElement('ha-mi-humidifier-card')
+export class MiHumidifierCard extends LitElement implements LovelaceCard {
   @property({ attribute: false }) public hass!: HomeAssistant;
-  @property() public config!: HumidifierCardConfig;
+  @property() private config!: any;
   @property() private isLoading = false;
   @property() private isTargetLoading = false;
   @property() private pendingTargetHumidity: number | null = null;
   private debounceTimeout: NodeJS.Timeout | null = null;
   private targetDebounceTimeout: NodeJS.Timeout | null = null;
 
-  static getStubConfig(): HumidifierCardConfig {
+  public static getStubConfig(): any {
     return {
-      type: 'custom:mi-humidifier-card',
-      entity: 'humidifier.deerma_jsq5_8f1b_humidifier',
+      type: 'ha-mi-humidifier-card',
+      entity: 'humidifier.mi_humidifier',
       show_image: true
     };
   }
 
-  setConfig(config: HumidifierCardConfig) {
+  // Required by LovelaceCard
+  public getCardSize(): number {
+    return 3;
+  }
+
+  setConfig(config: any) {
     if (!config.entity) {
       throw new Error('Please define an entity');
     }
