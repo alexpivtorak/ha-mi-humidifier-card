@@ -15,7 +15,11 @@ export default defineConfig({
     sourcemap: true,
     target: 'es2015',
     rollupOptions: {
-      external: [/^lit/, /^custom-card-helpers/],
+      external: [
+        'https://unpkg.com/lit@3.1.0/index.js?module',
+        'https://unpkg.com/lit@3.1.0/decorators.js?module',
+        'https://unpkg.com/custom-card-helpers@1.9.0/dist/index.js?module'
+      ],
       output: {
         format: 'es',
         entryFileNames: '[name].js'
