@@ -1,6 +1,6 @@
-import { LitElement, html, css } from 'lit';
-import { customElement, property } from 'lit/decorators.js';
-import { HomeAssistant, fireEvent, LovelaceCard } from 'custom-card-helpers';
+import { LitElement, html, css } from "lit-element";
+import { property, customElement } from "lit-element/decorators.js";
+import { HomeAssistant, LovelaceCard } from "custom-card-helpers";
 
 // This is for typing
 declare global {
