@@ -1,11 +1,11 @@
-import { LitElement, html, css } from "lit-element";
-import { property, customElement } from "lit-element/decorators.js";
+import { LitElement, html, css } from "lit";
+import { customElement, property } from "lit/decorators.js";
 import { HomeAssistant, LovelaceCard } from "custom-card-helpers";
 
 // This is for typing
 declare global {
   interface HTMLElementTagNameMap {
-    'ha-mi-humidifier-card': MiHumidifierCard;
+    'mi-humidifier-card': MiHumidifierCard;
   }
   interface Window {
     customCards?: Array<{
@@ -18,9 +18,9 @@ declare global {
 }
 
 /* Card registration */
-(window as any).customCards = (window as any).customCards || [];
-(window as any).customCards.push({
-  type: "ha-mi-humidifier-card",
+window.customCards = window.customCards || [];
+window.customCards.push({
+  type: "mi-humidifier-card",
   name: "Mi Humidifier Card",
   description: "A custom card for Mi Humidifier",
   preview: true,
@@ -32,7 +32,7 @@ console.info(
   'color: #4527a0; background: white; font-weight: 700;',
 );
 
-@customElement('ha-mi-humidifier-card')
+@customElement('mi-humidifier-card')
 export class MiHumidifierCard extends LitElement implements LovelaceCard {
   @property({ attribute: false }) public hass!: HomeAssistant;
   @property() private config!: any;
@@ -44,7 +44,7 @@ export class MiHumidifierCard extends LitElement implements LovelaceCard {
 
   public static getStubConfig(): any {
     return {
-      type: 'ha-mi-humidifier-card',
+      type: 'custom:mi-humidifier-card',
       entity: 'humidifier.mi_humidifier',
       show_image: true
     };
