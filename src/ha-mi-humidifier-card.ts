@@ -1,6 +1,7 @@
-import { css, CSSResultGroup, html, LitElement, TemplateResult } from "lit";
+// @ts-nocheck
+import { LitElement, html, css } from "lit";
 import { customElement, property } from "lit/decorators.js";
-import { HomeAssistant, LovelaceCard, LovelaceCardEditor } from "custom-card-helpers";
+import { HomeAssistant, LovelaceCard } from "custom-card-helpers";
 
 // This is for typing
 declare global {
@@ -23,9 +24,9 @@ if (!customElements.get("ha-mi-humidifier-card")) {
 }
 
 /* Card registration */
-window.customCards = window.customCards || [];
-window.customCards.push({
-  type: "ha-mi-humidifier-card",
+(window as any).customCards = (window as any).customCards || [];
+(window as any).customCards.push({
+  type: "custom:ha-mi-humidifier-card",
   name: "Mi Humidifier Card",
   description: "A custom card for Mi Humidifier",
   preview: true,

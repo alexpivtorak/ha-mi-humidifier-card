@@ -26,8 +26,8 @@ var l = (t, i, e) => new Promise((r, a) => {
   }, h = (s) => s.done ? r(s.value) : Promise.resolve(s.value).then(o, n);
   h((e = e.apply(t, i)).next());
 });
-import { LitElement as _, css as C, html as g } from "https://unpkg.com/lit@3.1.0/index.js?module";
-import { property as u, customElement as $ } from "https://unpkg.com/lit@3.1.0/decorators.js?module";
+import { LitElement as _, css as C, html as g } from "lit";
+import { property as u, customElement as $ } from "lit/decorators.js";
 var H = Object.defineProperty, L = Object.getOwnPropertyDescriptor, d = (t, i, e, r) => {
   for (var a = r > 1 ? void 0 : r ? L(i, e) : i, o = t.length - 1, n; o >= 0; o--)
     (n = t[o]) && (a = (r ? n(i, e, a) : n(a)) || a);
@@ -40,7 +40,7 @@ customElements.get("ha-mi-humidifier-card") || console.info(
 );
 window.customCards = window.customCards || [];
 window.customCards.push({
-  type: "ha-mi-humidifier-card",
+  type: "custom:ha-mi-humidifier-card",
   name: "Mi Humidifier Card",
   description: "A custom card for Mi Humidifier",
   preview: !0
