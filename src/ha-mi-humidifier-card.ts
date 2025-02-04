@@ -1,6 +1,6 @@
-import { LitElement, html, css } from 'https://unpkg.com/lit@3.1.0/index.js?module';
-import { customElement, property } from 'https://unpkg.com/lit@3.1.0/decorators.js?module';
-import { HomeAssistant, fireEvent, LovelaceCard } from 'https://unpkg.com/custom-card-helpers@1.9.0/dist/index.js?module';
+import { LitElement, html, css } from 'lit';
+import { customElement, property } from 'lit/decorators.js';
+import { HomeAssistant, fireEvent, LovelaceCard } from 'custom-card-helpers';
 
 // This is for typing
 declare global {
