@@ -6,25 +6,11 @@ export default defineConfig({
   build: {
     lib: {
       entry: resolve(__dirname, 'src/ha-mi-humidifier-card.ts'),
-      name: 'HaMiHumidifierCard',
-      fileName: 'ha-mi-humidifier-card',
-      formats: ['iife']
+      formats: ['es'],
+      fileName: 'ha-mi-humidifier-card'
     },
-    outDir: 'dist',
-    emptyOutDir: true,
-    sourcemap: true,
-    target: 'es2015',
     rollupOptions: {
-      output: {
-        format: 'iife',
-        entryFileNames: '[name].js',
-        extend: true,
-        globals: {
-          lit: 'lit',
-          'lit/decorators.js': 'litDecorators',
-          'custom-card-helpers': 'customCardHelpers'
-        }
-      }
+      external: ['lit', 'lit/decorators.js', 'custom-card-helpers']
     }
   },
   plugins: [
