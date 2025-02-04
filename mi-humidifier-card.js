@@ -11,19 +11,19 @@ var y = (t, i, e) => i in t ? v(t, i, { enumerable: !0, configurable: !0, writab
   return t;
 }, b = (t, i) => x(t, w(i));
 var l = (t, i, e) => new Promise((r, a) => {
-  var o = (s) => {
+  var o = (d) => {
     try {
-      h(e.next(s));
+      h(e.next(d));
     } catch (f) {
       a(f);
     }
-  }, n = (s) => {
+  }, n = (d) => {
     try {
-      h(e.throw(s));
+      h(e.throw(d));
     } catch (f) {
       a(f);
     }
-  }, h = (s) => s.done ? r(s.value) : Promise.resolve(s.value).then(o, n);
+  }, h = (d) => d.done ? r(d.value) : Promise.resolve(d.value).then(o, n);
   h((e = e.apply(t, i)).next());
 });
 import { LitElement as k, css as C, html as g } from "lit";
@@ -33,13 +33,13 @@ var H = Object.defineProperty, L = Object.getOwnPropertyDescriptor, c = (t, i, e
     (n = t[o]) && (a = (r ? n(i, e, a) : n(a)) || a);
   return r && a && H(i, e, a), a;
 };
-let d = class extends k {
+let s = class extends k {
   constructor() {
     super(...arguments), this.isLoading = !1, this.isTargetLoading = !1, this.pendingTargetHumidity = null, this.debounceTimeout = null, this.targetDebounceTimeout = null;
   }
   static getStubConfig() {
     return {
-      type: "mi-humidifier-card",
+      type: "custom:mi-humidifier-card",
       entity: "humidifier.deerma_jsq5_8f1b_humidifier",
       show_image: !0
     };
@@ -478,22 +478,23 @@ let d = class extends k {
 };
 c([
   p({ attribute: !1 })
-], d.prototype, "hass", 2);
+], s.prototype, "hass", 2);
 c([
   p()
-], d.prototype, "config", 2);
+], s.prototype, "config", 2);
 c([
   p()
-], d.prototype, "isLoading", 2);
+], s.prototype, "isLoading", 2);
 c([
   p()
-], d.prototype, "isTargetLoading", 2);
+], s.prototype, "isTargetLoading", 2);
 c([
   p()
-], d.prototype, "pendingTargetHumidity", 2);
-d = c([
+], s.prototype, "pendingTargetHumidity", 2);
+s = c([
   $("mi-humidifier-card")
-], d);
+], s);
+customElements.define("mi-humidifier-card", s);
 window.customCards = window.customCards || [];
 window.customCards.push({
   type: "mi-humidifier-card",
@@ -501,6 +502,6 @@ window.customCards.push({
   description: "A custom card for Mi Humidifier"
 });
 export {
-  d as MiHumidifierCard
+  s as MiHumidifierCard
 };
 //# sourceMappingURL=mi-humidifier-card.js.map

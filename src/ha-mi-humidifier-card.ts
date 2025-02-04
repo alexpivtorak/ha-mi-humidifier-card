@@ -30,7 +30,7 @@ export class MiHumidifierCard extends LitElement {
 
   static getStubConfig(): HumidifierCardConfig {
     return {
-      type: 'mi-humidifier-card',
+      type: 'custom:mi-humidifier-card',
       entity: 'humidifier.deerma_jsq5_8f1b_humidifier',
       show_image: true
     };
@@ -529,6 +529,8 @@ export class MiHumidifierCard extends LitElement {
 }
 
 // Register the card
+customElements.define('mi-humidifier-card', MiHumidifierCard);
+
 window.customCards = window.customCards || [];
 window.customCards.push({
   type: "mi-humidifier-card",
