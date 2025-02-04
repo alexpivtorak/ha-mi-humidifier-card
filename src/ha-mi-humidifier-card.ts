@@ -4,9 +4,6 @@ import { HomeAssistant, LovelaceCard } from "custom-card-helpers";
 
 // This is for typing
 declare global {
-  interface HTMLElementTagNameMap {
-    'ha-mi-humidifier-card': MiHumidifierCard;
-  }
   interface Window {
     customCards?: Array<{
       type: string;
@@ -17,20 +14,20 @@ declare global {
   }
 }
 
-/* Card registration */
-window.customCards = window.customCards || [];
-window.customCards.push({
-  type: "custom:ha-mi-humidifier-card",
-  name: "Mi Humidifier Card",
-  description: "A custom card for Mi Humidifier",
-  preview: true,
-});
-
 console.info(
   '%c MI-HUMIDIFIER-CARD %c Version 1.0.0 ',
   'color: white; background: #4527a0; font-weight: 700;',
   'color: #4527a0; background: white; font-weight: 700;',
 );
+
+/* Card registration */
+window.customCards = window.customCards || [];
+window.customCards.push({
+  type: "ha-mi-humidifier-card",
+  name: "Mi Humidifier Card",
+  description: "A custom card for Mi Humidifier",
+  preview: true,
+});
 
 @customElement('ha-mi-humidifier-card')
 export class MiHumidifierCard extends LitElement implements LovelaceCard {
@@ -544,5 +541,11 @@ export class MiHumidifierCard extends LitElement implements LovelaceCard {
         </div>
       </ha-card>
     `;
+  }
+}
+
+declare global {
+  interface HTMLElementTagNameMap {
+    'ha-mi-humidifier-card': MiHumidifierCard;
   }
 }
