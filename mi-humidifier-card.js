@@ -2,7 +2,7 @@ var v = Object.defineProperty, x = Object.defineProperties;
 var w = Object.getOwnPropertyDescriptors;
 var m = Object.getOwnPropertySymbols;
 var T = Object.prototype.hasOwnProperty, _ = Object.prototype.propertyIsEnumerable;
-var y = (t, i, e) => i in t ? v(t, i, { enumerable: !0, configurable: !0, writable: !0, value: e }) : t[i] = e, p = (t, i) => {
+var y = (t, i, e) => i in t ? v(t, i, { enumerable: !0, configurable: !0, writable: !0, value: e }) : t[i] = e, u = (t, i) => {
   for (var e in i || (i = {}))
     T.call(i, e) && y(t, e, i[e]);
   if (m)
@@ -27,7 +27,7 @@ var l = (t, i, e) => new Promise((r, a) => {
   h((e = e.apply(t, i)).next());
 });
 import { LitElement as k, css as C, html as g } from "lit";
-import { property as u, customElement as $ } from "lit/decorators.js";
+import { property as p, customElement as $ } from "lit/decorators.js";
 var H = Object.defineProperty, L = Object.getOwnPropertyDescriptor, c = (t, i, e, r) => {
   for (var a = r > 1 ? void 0 : r ? L(i, e) : i, o = t.length - 1, n; o >= 0; o--)
     (n = t[o]) && (a = (r ? n(i, e, a) : n(a)) || a);
@@ -39,7 +39,7 @@ let d = class extends k {
   }
   static getStubConfig() {
     return {
-      type: "custom:mi-humidifier-card",
+      type: "mi-humidifier-card",
       entity: "humidifier.deerma_jsq5_8f1b_humidifier",
       show_image: !0
     };
@@ -47,7 +47,7 @@ let d = class extends k {
   setConfig(t) {
     if (!t.entity)
       throw new Error("Please define an entity");
-    this.config = p({
+    this.config = u({
       show_image: !0
     }, t);
   }
@@ -56,8 +56,8 @@ let d = class extends k {
       !this.config.entity || this.isLoading || (this.debounceTimeout && clearTimeout(this.debounceTimeout), this.debounceTimeout = setTimeout(() => l(this, null, function* () {
         try {
           this.isLoading = !0;
-          const i = this.hass.states[this.config.entity].state === "on" ? "off" : "on", e = i === "on" ? "turn_on" : "turn_off", r = p({}, this.hass.states[this.config.entity]);
-          this.hass.states[this.config.entity] = b(p({}, r), {
+          const i = this.hass.states[this.config.entity].state === "on" ? "off" : "on", e = i === "on" ? "turn_on" : "turn_off", r = u({}, this.hass.states[this.config.entity]);
+          this.hass.states[this.config.entity] = b(u({}, r), {
             state: i
           }), this.requestUpdate(), yield this.hass.callService("humidifier", e, {
             entity_id: this.config.entity
@@ -477,28 +477,29 @@ let d = class extends k {
   }
 };
 c([
-  u({ attribute: !1 })
+  p({ attribute: !1 })
 ], d.prototype, "hass", 2);
 c([
-  u()
+  p()
 ], d.prototype, "config", 2);
 c([
-  u()
+  p()
 ], d.prototype, "isLoading", 2);
 c([
-  u()
+  p()
 ], d.prototype, "isTargetLoading", 2);
 c([
-  u()
+  p()
 ], d.prototype, "pendingTargetHumidity", 2);
 d = c([
   $("mi-humidifier-card")
 ], d);
-window.customElements.get("mi-humidifier-card") || (window.customCards = window.customCards || [], window.customCards.push({
-  type: "custom:mi-humidifier-card",
+window.customCards = window.customCards || [];
+window.customCards.push({
+  type: "mi-humidifier-card",
   name: "Mi Humidifier Card",
   description: "A custom card for Mi Humidifier"
-}));
+});
 export {
   d as MiHumidifierCard
 };
