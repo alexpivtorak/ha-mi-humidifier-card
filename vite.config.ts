@@ -10,8 +10,8 @@ export default defineConfig({
       fileName: 'ha-mi-humidifier-card',
       formats: ['es']
     },
-    outDir: 'dist',
-    emptyOutDir: true,
+    outDir: '.',
+    emptyOutDir: false,
     sourcemap: true,
     target: 'es2015',
     rollupOptions: {
