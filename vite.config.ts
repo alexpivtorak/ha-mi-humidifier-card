@@ -7,7 +7,7 @@ export default defineConfig({
     lib: {
       entry: resolve(__dirname, 'src/ha-mi-humidifier-card.ts'),
       name: 'MiHumidifierCard',
-      fileName: 'mi-humidifier-card',
+      fileName: 'ha-mi-humidifier-card',
       formats: ['es']
     },
     outDir: '.',
