@@ -307,7 +307,7 @@ export class MiHumidifierCard extends LitElement {
         height: 200px;
         margin: 0 auto 16px;
         display: block;
-        background: url("/local/community/ha-mi-humidifier-card/humidifier-1.png") no-repeat center;
+        background: url("/local/community/ha-mi-humidifier-card/dist/humidifier-1.png") no-repeat center;
         background-size: contain;
       }
       .controls-row {
@@ -532,7 +532,7 @@ export class MiHumidifierCard extends LitElement {
 if (!window.customElements.get('ha-mi-humidifier-card')) {
   window.customCards = window.customCards || [];
   window.customCards.push({
-    type: "ha-mi-humidifier-card",
+    type: "custom:ha-mi-humidifier-card",
     name: "Mi Humidifier Card",
     description: "A custom card for Mi Humidifier"
   });
