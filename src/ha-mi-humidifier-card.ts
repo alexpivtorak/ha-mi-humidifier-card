@@ -2,6 +2,25 @@ import { LitElement, html, css } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
 import { HomeAssistant } from 'custom-card-helpers';
 
+// Register card in HACS
+if (!customElements.get('mi-humidifier-card')) {
+  console.info(
+    '%c MI-HUMIDIFIER-CARD %c Registering card... ',
+    'color: white; background: #4527a0; font-weight: 700;',
+    'color: #4527a0; background: white; font-weight: 700;',
+  );
+
+  if (!window.customCards) {
+    window.customCards = [];
+  }
+
+  window.customCards.push({
+    type: "custom:mi-humidifier-card",
+    name: "Mi Humidifier Card",
+    description: "A custom card for Mi Humidifier"
+  });
+}
+
 declare global {
   interface Window {
     customCards: Array<{
@@ -12,34 +31,17 @@ declare global {
   }
 }
 
-interface HumidifierCardConfig {
-  type: 'custom:mi-humidifier-card';
-  entity: string;
-  show_image?: boolean;
-}
-
-// Register card in HACS
-if (!window.customCards) {
-  window.customCards = [];
-}
-
-console.info(
-  '%c MI-HUMIDIFIER-CARD %c Registering card... ',
-  'color: white; background: #4527a0; font-weight: 700;',
-  'color: #4527a0; background: white; font-weight: 700;',
-);
-
-window.customCards.push({
-  type: "custom:mi-humidifier-card",
-  name: "Mi Humidifier Card",
-  description: "A custom card for Mi Humidifier"
-});
-
 console.info(
   '%c MI-HUMIDIFIER-CARD %c Version 1.0.0 ',
   'color: white; background: #4527a0; font-weight: 700;',
   'color: #4527a0; background: white; font-weight: 700;',
 );
+
+interface HumidifierCardConfig {
+  type: 'custom:mi-humidifier-card';
+  entity: string;
+  show_image?: boolean;
+}
 
 @customElement('mi-humidifier-card')
 export class MiHumidifierCard extends LitElement {
@@ -330,7 +332,7 @@ export class MiHumidifierCard extends LitElement {
         height: 200px;
         margin: 0 auto 16px;
         display: block;
-        background: url("/hacsfiles/ha-mi-humidifier-card/humidifier-1.png") no-repeat center;
+        background: url("./humidifier-1.png") no-repeat center;
         background-size: contain;
       }
       .controls-row {

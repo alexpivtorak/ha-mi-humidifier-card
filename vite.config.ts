@@ -10,8 +10,8 @@ export default defineConfig({
       fileName: 'ha-mi-humidifier-card',
       formats: ['es']
     },
-    outDir: '.',
-    emptyOutDir: false,
+    outDir: 'dist',
+    emptyOutDir: true,
     sourcemap: true,
     target: 'es2015',
     rollupOptions: {
@@ -23,8 +23,7 @@ export default defineConfig({
       targets: [
         {
           src: 'images/humidifier-1.png',
-          dest: '.',
-          rename: 'humidifier-1.png'
+          dest: 'dist'
         }
       ]
     })

@@ -1,15 +1,15 @@
 var v = Object.defineProperty, x = Object.defineProperties;
 var w = Object.getOwnPropertyDescriptors;
 var m = Object.getOwnPropertySymbols;
-var T = Object.prototype.hasOwnProperty, _ = Object.prototype.propertyIsEnumerable;
-var y = (t, i, e) => i in t ? v(t, i, { enumerable: !0, configurable: !0, writable: !0, value: e }) : t[i] = e, p = (t, i) => {
+var T = Object.prototype.hasOwnProperty, k = Object.prototype.propertyIsEnumerable;
+var b = (t, i, e) => i in t ? v(t, i, { enumerable: !0, configurable: !0, writable: !0, value: e }) : t[i] = e, p = (t, i) => {
   for (var e in i || (i = {}))
-    T.call(i, e) && y(t, e, i[e]);
+    T.call(i, e) && b(t, e, i[e]);
   if (m)
     for (var e of m(i))
-      _.call(i, e) && y(t, e, i[e]);
+      k.call(i, e) && b(t, e, i[e]);
   return t;
-}, b = (t, i) => x(t, w(i));
+}, y = (t, i) => x(t, w(i));
 var l = (t, i, e) => new Promise((r, a) => {
   var o = (s) => {
     try {
@@ -26,20 +26,34 @@ var l = (t, i, e) => new Promise((r, a) => {
   }, h = (s) => s.done ? r(s.value) : Promise.resolve(s.value).then(o, n);
   h((e = e.apply(t, i)).next());
 });
-import { LitElement as k, css as C, html as g } from "lit";
+import { LitElement as _, css as C, html as g } from "lit";
 import { property as u, customElement as $ } from "lit/decorators.js";
-var H = Object.defineProperty, L = Object.getOwnPropertyDescriptor, c = (t, i, e, r) => {
+var H = Object.defineProperty, L = Object.getOwnPropertyDescriptor, d = (t, i, e, r) => {
   for (var a = r > 1 ? void 0 : r ? L(i, e) : i, o = t.length - 1, n; o >= 0; o--)
     (n = t[o]) && (a = (r ? n(i, e, a) : n(a)) || a);
   return r && a && H(i, e, a), a;
 };
-let d = class extends k {
+customElements.get("mi-humidifier-card") || (console.info(
+  "%c MI-HUMIDIFIER-CARD %c Registering card... ",
+  "color: white; background: #4527a0; font-weight: 700;",
+  "color: #4527a0; background: white; font-weight: 700;"
+), window.customCards || (window.customCards = []), window.customCards.push({
+  type: "custom:mi-humidifier-card",
+  name: "Mi Humidifier Card",
+  description: "A custom card for Mi Humidifier"
+}));
+console.info(
+  "%c MI-HUMIDIFIER-CARD %c Version 1.0.0 ",
+  "color: white; background: #4527a0; font-weight: 700;",
+  "color: #4527a0; background: white; font-weight: 700;"
+);
+let c = class extends _ {
   constructor() {
     super(...arguments), this.isLoading = !1, this.isTargetLoading = !1, this.pendingTargetHumidity = null, this.debounceTimeout = null, this.targetDebounceTimeout = null;
   }
   static getStubConfig() {
     return {
-      type: "custom:ha-mi-humidifier-card",
+      type: "custom:mi-humidifier-card",
       entity: "humidifier.deerma_jsq5_8f1b_humidifier",
       show_image: !0
     };
@@ -57,7 +71,7 @@ let d = class extends k {
         try {
           this.isLoading = !0;
           const i = this.hass.states[this.config.entity].state === "on" ? "off" : "on", e = i === "on" ? "turn_on" : "turn_off", r = p({}, this.hass.states[this.config.entity]);
-          this.hass.states[this.config.entity] = b(p({}, r), {
+          this.hass.states[this.config.entity] = y(p({}, r), {
             state: i
           }), this.requestUpdate(), yield this.hass.callService("humidifier", e, {
             entity_id: this.config.entity
@@ -270,7 +284,7 @@ let d = class extends k {
         height: 200px;
         margin: 0 auto 16px;
         display: block;
-        background: url("/local/community/ha-mi-humidifier-card/dist/humidifier-1.png") no-repeat center;
+        background: url("./humidifier-1.png") no-repeat center;
         background-size: contain;
       }
       .controls-row {
@@ -476,30 +490,25 @@ let d = class extends k {
     `;
   }
 };
-c([
+d([
   u({ attribute: !1 })
-], d.prototype, "hass", 2);
-c([
+], c.prototype, "hass", 2);
+d([
   u()
-], d.prototype, "config", 2);
-c([
+], c.prototype, "config", 2);
+d([
   u()
-], d.prototype, "isLoading", 2);
-c([
+], c.prototype, "isLoading", 2);
+d([
   u()
-], d.prototype, "isTargetLoading", 2);
-c([
+], c.prototype, "isTargetLoading", 2);
+d([
   u()
-], d.prototype, "pendingTargetHumidity", 2);
-d = c([
-  $("ha-mi-humidifier-card")
-], d);
-window.customElements.get("ha-mi-humidifier-card") || (window.customCards = window.customCards || [], window.customCards.push({
-  type: "custom:ha-mi-humidifier-card",
-  name: "Mi Humidifier Card",
-  description: "A custom card for Mi Humidifier"
-}));
+], c.prototype, "pendingTargetHumidity", 2);
+c = d([
+  $("mi-humidifier-card")
+], c);
 export {
-  d as MiHumidifierCard
+  c as MiHumidifierCard
 };
 //# sourceMappingURL=ha-mi-humidifier-card.js.map
